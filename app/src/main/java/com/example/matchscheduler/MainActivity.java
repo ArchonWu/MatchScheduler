@@ -2,21 +2,21 @@ package com.example.matchscheduler;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.FontResourcesParserCompat;
-
-import android.view.View;
 
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public static TextView fetchResult;
+    public static SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +25,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fetchResult = findViewById(R.id.textView_searhResult);
 
-        // text fetch
-        fetchResult = findViewById(R.id.fetchResult_textView);
-        FetchJson process = new FetchJson();
-        process.execute();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
+        searchView.setQueryHint("Search player here");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(searchView.getContext(), "Searching: " + query, Toast.LENGTH_SHORT).show();
+                searchView.onActionViewCollapsed();
+
+                FetchJson process = new FetchJson(query);
+                process.execute();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
