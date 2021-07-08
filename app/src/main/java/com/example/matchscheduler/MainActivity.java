@@ -14,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// display search result.. go to another fragment after selecting search result to display more
 public class MainActivity extends AppCompatActivity {
     public static TextView fetchResult;
     public static SearchView searchView;
@@ -24,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         fetchResult = findViewById(R.id.textView_searhResult);
-
     }
 
 
