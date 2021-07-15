@@ -4,12 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +18,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     public static TextView fetchResult;
     public static SearchView searchView;
+    public static RecyclerView recyclerView;
+
+    String s1[] = new String[2];
+    String s2[] = new String[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fetchResult = findViewById(R.id.textView_searhResult);
+        recyclerView = findViewById(R.id.result_recyclerView);
+
+        s1[0] = "s1_0";
+        s1[1] = "s1_1";
+        s2[0] = "s2_0";
+        s2[1] = "s2_1";
+        recyclerResultAdapter recyclerResultAdapter = new recyclerResultAdapter(this, s1, s2, null);
+        recyclerView.setAdapter(recyclerResultAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

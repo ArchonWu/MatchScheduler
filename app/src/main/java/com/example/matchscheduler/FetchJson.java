@@ -59,4 +59,7 @@ public class FetchJson extends AsyncTask {
         MainActivity.fetchResult.setText(data); // got here
     }
 
+    void makeSearchResult(){
+
+    }
 }
