@@ -45,7 +45,7 @@ public class FetchJson extends AsyncTask {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return data;
     }
 
     @Override

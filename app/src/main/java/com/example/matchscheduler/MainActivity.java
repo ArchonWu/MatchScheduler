@@ -18,10 +18,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     public static TextView fetchResult;
     public static SearchView searchView;
-    public static RecyclerView recyclerView;
-
-    String s1[] = new String[2];
-    String s2[] = new String[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fetchResult = findViewById(R.id.textView_searhResult);
-        recyclerView = findViewById(R.id.result_recyclerView);
 
-        s1[0] = "s1_0";
-        s1[1] = "s1_1";
-        s2[0] = "s2_0";
-        s2[1] = "s2_1";
-        recyclerResultAdapter recyclerResultAdapter = new recyclerResultAdapter(this, s1, s2, null);
-        recyclerView.setAdapter(recyclerResultAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -48,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
-        searchView.setQueryHint("Search player here");
+        searchView.setQueryHint("Search player id here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

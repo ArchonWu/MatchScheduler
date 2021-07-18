@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 /*
     MyAdapter
  */
-public class recyclerResultAdapter extends RecyclerView.Adapter<recyclerResultAdapter.MyViewHolder> {
+public class RecyclerResultAdapter extends RecyclerView.Adapter<RecyclerResultAdapter.MyViewHolder> {
     Context context;
     String s1[];
     String s2[];
     int img[];
 
-    public recyclerResultAdapter(Context context, String s1[], String s2[], int img[]){
+    public RecyclerResultAdapter(Context context, String s1[], String s2[], int img[]){
         this.context = context;
         this.s1 = s1;
         this.s2 = s2;
