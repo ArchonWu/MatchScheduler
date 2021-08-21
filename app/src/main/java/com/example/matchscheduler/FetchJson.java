@@ -1,6 +1,7 @@
 package com.example.matchscheduler;
 
 import android.os.AsyncTask;
+import android.view.Display;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class FetchJson extends AsyncTask {
     private String data;
@@ -23,10 +25,12 @@ public class FetchJson extends AsyncTask {
         this.keyword = keyword;
     }
 
+
+    // Find the user's search target with opensearch function to get the url,
+    // return the result as a string
     @Override
     protected Object doInBackground(Object[] objects) {
         try {
-//            String urlStr = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + keyword + "&limit=5&namespace=0&format=json";
             String urlStr = "https://liquipedia.net/starcraft2/api.php?action=opensearch&format=json&search=" + keyword;
             URL url = new URL(urlStr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -45,20 +49,48 @@ public class FetchJson extends AsyncTask {
         return data;
     }
 
+
+    // Display search result from doInBackground on textview fetchResult (current)
+    // TODO: returns target player's match schedule
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         try {
             arrayJson = new JSONArray(data);
-            MainActivity.fetchResult.setText(getPlayerLinkJson(arrayJson));
-//            MainActivity.fetchResult.setText(data);
+            MainActivity.fetchResult.setText(getPlayerLinkJson(arrayJson)); // for testing
+
+            // TODO: parse link's data as json
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    // returns the url of the player's page
     private String getPlayerLinkJson(JSONArray arrayJson) throws JSONException {
-        String playerUrl = ((JSONArray) (arrayJson.get(3))).get(0).toString();
-        return playerUrl;
+        JSONArray totalUrls = ((JSONArray) filterExtraUrls(arrayJson).get(3));
+        boolean isDuplicate = totalUrls.length() > 1;
+
+        if (isDuplicate) {
+            // TODO: display the options
+            return "OH! " + totalUrls + " PLAYERS HAVE THE SAME NAME YOU SEARCHED!";
+        } else {
+            // return the only valid url
+            String playerUrl = ((JSONArray) (arrayJson.get(3))).get(0).toString();
+            return playerUrl;
+        }
+    }
+
+    // filters out urls end with "Results" and "Matches"
+    private JSONArray filterExtraUrls(JSONArray arrayJson) throws JSONException {
+        JSONArray urls = (JSONArray) arrayJson.get(3);
+        int totalUrls = urls.length();
+        for (int i = totalUrls - 1; i > 0; i--) {
+            String currentUrl = ((JSONArray) arrayJson.get(3)).get(i).toString();
+            if (currentUrl.contains("Results") || currentUrl.contains("Matches")) {
+                ((JSONArray) arrayJson.get(3)).remove(i);
+            }
+        }
+        return arrayJson;
     }
 }
