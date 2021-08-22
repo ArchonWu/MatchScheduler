@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 /*
-
+    Display search result from search bar
  */
 public class SecondFragment extends Fragment {
     private TextView tv;

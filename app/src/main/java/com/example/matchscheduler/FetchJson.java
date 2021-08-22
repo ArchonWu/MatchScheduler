@@ -15,6 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/*
+
+ */
 public class FetchJson extends AsyncTask {
     private String data;
     private JSONArray arrayJson;
@@ -26,7 +29,7 @@ public class FetchJson extends AsyncTask {
     }
 
 
-    // Find the user's search target with opensearch function to get the url,
+    // Find the user's search target with opensearch function (api) to get the url,
     // return the result as a string
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -59,6 +62,9 @@ public class FetchJson extends AsyncTask {
             arrayJson = new JSONArray(data);
             MainActivity.fetchResult.setText(getPlayerLinkJson(arrayJson)); // for testing
 
+            // TODO: display search result (maybe multiple players with the same name)
+
+
             // TODO: parse link's data as json
 
         } catch (JSONException e) {
@@ -73,7 +79,7 @@ public class FetchJson extends AsyncTask {
 
         if (isDuplicate) {
             // TODO: display the options
-            return "OH! " + totalUrls + " PLAYERS HAVE THE SAME NAME YOU SEARCHED!";
+            return "OH! " + totalUrls.length() + " PLAYERS HAVE THE SAME NAME YOU SEARCHED!";
         } else {
             // return the only valid url
             String playerUrl = ((JSONArray) (arrayJson.get(3))).get(0).toString();

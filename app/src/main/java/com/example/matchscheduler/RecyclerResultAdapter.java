@@ -30,7 +30,7 @@ public class RecyclerResultAdapter extends RecyclerView.Adapter<RecyclerResultAd
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.view_row, parent, false);
+        View view = inflater.inflate(R.layout.view_row_tournament, parent, false);
         return new MyViewHolder(view);
     }
 
