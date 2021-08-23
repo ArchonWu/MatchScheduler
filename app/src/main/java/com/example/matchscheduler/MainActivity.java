@@ -20,7 +20,6 @@ import android.widget.Toast;
 // display search result.. go to another fragment after selecting search result to display more
 public class MainActivity extends AppCompatActivity {
     public static TextView fetchResult;
-    public static SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

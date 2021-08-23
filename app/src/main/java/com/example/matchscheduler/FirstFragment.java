@@ -2,8 +2,6 @@ package com.example.matchscheduler;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -25,6 +23,7 @@ public class FirstFragment extends Fragment {
     public SearchView searchView;
     private View theView;
     private TextView tv;
+    public static FetchJson fetchProcess;
 
     String s1[] = new String[2];
     String s2[] = new String[2];
@@ -54,8 +53,10 @@ public class FirstFragment extends Fragment {
                 searchView.onActionViewCollapsed();
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
-                FetchJson process = new FetchJson(query);
-                process.execute();
+                fetchProcess = new FetchJson(query);
+                fetchProcess.execute();
+
+
                 return true;
             }
 
@@ -66,7 +67,7 @@ public class FirstFragment extends Fragment {
         });
 
 
-        recyclerView = getView().findViewById(R.id.result_recyclerView);
+        recyclerView = getView().findViewById(R.id.first_fragment_result_recyclerView);
         tv = (TextView) theView.findViewById(R.id.textView_first_fragment);
 
         s1[0] = "s1_0";

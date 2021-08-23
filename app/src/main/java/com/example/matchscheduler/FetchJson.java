@@ -60,7 +60,8 @@ public class FetchJson extends AsyncTask {
         super.onPostExecute(o);
         try {
             arrayJson = new JSONArray(data);
-            MainActivity.fetchResult.setText(getPlayerLinkJson(arrayJson)); // for testing
+//            MainActivity.fetchResult.setText(displayPlayerSearchResult(arrayJson);); // for testing
+            displayPlayerSearchResult(arrayJson);
 
             // TODO: display search result (maybe multiple players with the same name)
 
@@ -72,20 +73,53 @@ public class FetchJson extends AsyncTask {
         }
     }
 
-    // returns the url of the player's page
-    private String getPlayerLinkJson(JSONArray arrayJson) throws JSONException {
+    // displays player search result (single or multiple) with recycler view
+    private void displayPlayerSearchResult(JSONArray arrayJson) throws JSONException {
         JSONArray totalUrls = ((JSONArray) filterExtraUrls(arrayJson).get(3));
         boolean isDuplicate = totalUrls.length() > 1;
 
-        if (isDuplicate) {
-            // TODO: display the options
-            return "OH! " + totalUrls.length() + " PLAYERS HAVE THE SAME NAME YOU SEARCHED!";
-        } else {
-            // return the only valid url
-            String playerUrl = ((JSONArray) (arrayJson.get(3))).get(0).toString();
-            return playerUrl;
+        if(isDuplicate){
+            // go to the disambiguation page and parse with prop=text
+            // e.g.: https://liquipedia.net/starcraft2/api.php?action=parse&format=json&page=Classic&prop=text
+            MainActivity.fetchResult.setText("Oh there's duplicate!");
+
+        }else{
+            MainActivity.fetchResult.setText("unique player name!");
+
         }
+
     }
+
+    protected String[] getPlayerSearchResult() throws JSONException{
+        JSONArray urls = (JSONArray) arrayJson.get(3);
+        int totalUrls = urls.length();
+        String[] playerList = new String[totalUrls];
+
+        // TODO: need to add dynamically
+        playerList[0] = "Classic (Kim XX)";
+        playerList[1] = "Classic (Kim XXX)";
+
+        return playerList;
+    }
+
+    // ** replace later
+    // returns the url of the player's page
+//    private String getPlayerLinkJson(JSONArray arrayJson) throws JSONException {
+//        JSONArray totalUrls = ((JSONArray) filterExtraUrls(arrayJson).get(3));
+//        boolean isDuplicate = totalUrls.length() > 1;
+//
+//        if (isDuplicate) {
+//            // TODO: display the options
+//            // go to the disambiguation page and parse with prop=text
+//            // https://liquipedia.net/starcraft2/api.php?action=parse&format=json&page=Classic&prop=text
+//
+//            return "OH! " + totalUrls.length() + " PLAYERS HAVE THE SAME NAME YOU SEARCHED!\n" + totalUrls;
+//        } else {
+//            // return the only valid url
+//            String playerUrl = ((JSONArray) (arrayJson.get(3))).get(0).toString();
+//            return playerUrl;
+//        }
+//    }
 
     // filters out urls end with "Results" and "Matches"
     private JSONArray filterExtraUrls(JSONArray arrayJson) throws JSONException {
