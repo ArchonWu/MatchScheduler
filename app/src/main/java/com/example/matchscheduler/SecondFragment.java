@@ -45,7 +45,11 @@ public class SecondFragment extends Fragment{
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-
+        try {
+            playerList = FirstFragment.fetchProcess.getPlayerSearchResult();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         recyclerViewPlayerSearchResult = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
         RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter = new RecyclerSearchPlayerResultAdapter(getActivity(), playerList);
         recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);

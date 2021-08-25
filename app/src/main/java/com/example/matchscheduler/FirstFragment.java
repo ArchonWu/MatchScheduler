@@ -51,9 +51,9 @@ public class FirstFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(searchView.getContext(), "Searching: " + query, Toast.LENGTH_SHORT).show();
                 searchView.onActionViewCollapsed();
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-                fetchProcess = new FetchJson(query);
+//                NavHostFragment.findNavController(FirstFragment.this)
+//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                fetchProcess = new FetchJson(query, getContext());
                 fetchProcess.execute();
 
 
@@ -80,12 +80,12 @@ public class FirstFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-//        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
+        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
     }
 }

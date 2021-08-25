@@ -1,7 +1,13 @@
 package com.example.matchscheduler;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.view.Display;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,10 +28,12 @@ public class FetchJson extends AsyncTask {
     private String data;
     private JSONArray arrayJson;
     private String keyword;
+    private Context theContext;
 
-    public FetchJson(String keyword) {
+    public FetchJson(String keyword, Context theContext) {
         this.data = "";
         this.keyword = keyword;
+        this.theContext = theContext;
     }
 
 
@@ -62,6 +70,8 @@ public class FetchJson extends AsyncTask {
             arrayJson = new JSONArray(data);
 //            MainActivity.fetchResult.setText(displayPlayerSearchResult(arrayJson);); // for testing
             displayPlayerSearchResult(arrayJson);
+//            NavHostFragment.findNavController((Fragment) o)
+//                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
             // TODO: display search result (maybe multiple players with the same name)
 
@@ -71,6 +81,7 @@ public class FetchJson extends AsyncTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Toast.makeText(theContext, "finished searching", Toast.LENGTH_SHORT).show();
     }
 
     // displays player search result (single or multiple) with recycler view
@@ -95,9 +106,9 @@ public class FetchJson extends AsyncTask {
         int totalUrls = urls.length();
         String[] playerList = new String[totalUrls];
 
-        // TODO: need to add dynamically
-        playerList[0] = "Classic (Kim XX)";
-        playerList[1] = "Classic (Kim XXX)";
+        for(int i = 0; i<totalUrls; i++){
+            playerList[i] = urls.get(i).toString();
+        }
 
         return playerList;
     }
