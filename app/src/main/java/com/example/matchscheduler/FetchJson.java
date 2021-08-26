@@ -1,6 +1,7 @@
 package com.example.matchscheduler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.Display;
 import android.widget.Toast;
@@ -68,10 +69,7 @@ public class FetchJson extends AsyncTask {
         super.onPostExecute(o);
         try {
             arrayJson = new JSONArray(data);
-//            MainActivity.fetchResult.setText(displayPlayerSearchResult(arrayJson);); // for testing
             displayPlayerSearchResult(arrayJson);
-//            NavHostFragment.findNavController((Fragment) o)
-//                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
             // TODO: display search result (maybe multiple players with the same name)
 
@@ -82,6 +80,15 @@ public class FetchJson extends AsyncTask {
             e.printStackTrace();
         }
         Toast.makeText(theContext, "finished searching", Toast.LENGTH_SHORT).show();
+
+        // notifies second fragment to update recycler view
+        try {
+            Intent intent = new Intent("fetchJson_search_player_ok");
+            intent.putExtra("playerList", getPlayerSearchResult());
+            theContext.sendBroadcast(intent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // displays player search result (single or multiple) with recycler view
@@ -96,21 +103,22 @@ public class FetchJson extends AsyncTask {
 
         }else{
             MainActivity.fetchResult.setText("unique player name!");
-
         }
 
     }
 
     protected String[] getPlayerSearchResult() throws JSONException{
-        JSONArray urls = (JSONArray) arrayJson.get(3);
-        int totalUrls = urls.length();
-        String[] playerList = new String[totalUrls];
+        if (!data.equals("") && data!=null) {
+            JSONArray urls = (JSONArray) arrayJson.get(3);
+            int totalUrls = urls.length();
+            String[] playerList = new String[totalUrls];
 
-        for(int i = 0; i<totalUrls; i++){
-            playerList[i] = urls.get(i).toString();
+            for (int i = 0; i < totalUrls; i++) {
+                playerList[i] = urls.get(i).toString();
+            }
+            return playerList;
         }
-
-        return playerList;
+        return null;
     }
 
     // ** replace later
