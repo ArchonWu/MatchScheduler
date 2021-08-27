@@ -25,10 +25,8 @@ public class FirstFragment extends Fragment {
     private TextView tv;
     private FetchJson fetchProcess;
 
-//    String s1[] = new String[2];
-//    String s2[] = new String[2];
-    String s1[] = new String[0];
-    String s2[] = new String[0];
+    private String s1[] = new String[0];
+    private String s2[] = new String[0];
 
     @Override
     public View onCreateView(

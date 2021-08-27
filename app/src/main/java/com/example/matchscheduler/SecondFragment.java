@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,15 +16,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONException;
-
 /*
     Display search result from search bar
  */
 public class SecondFragment extends Fragment {
     private RecyclerView recyclerViewPlayerSearchResult;
     private View theView;
-    private String[] playerList;
+    private String[] playerNames;
+    private String[] playerUrls;
     private AsyncBroadcastReceiver asyncBroadcastReceiver;
 
     @Override
@@ -49,9 +47,11 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (playerList != null) {
-            recyclerViewPlayerSearchResult = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
-            RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter = new RecyclerSearchPlayerResultAdapter(getActivity(), playerList);
+        if (playerUrls != null) {
+            recyclerViewPlayerSearchResult
+                    = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
+            RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
+                    = new RecyclerSearchPlayerResultAdapter(getActivity(), playerNames, playerUrls);
             recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
             recyclerViewPlayerSearchResult.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
@@ -67,15 +67,17 @@ public class SecondFragment extends Fragment {
     }
 
     private class AsyncBroadcastReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
             Toast.makeText(getContext(), "received intent", Toast.LENGTH_SHORT).show();
-            playerList = intent.getStringArrayExtra("playerList");
+            playerNames = intent.getStringArrayExtra("playerNames");
+            playerUrls = intent.getStringArrayExtra("playerUrls");
 
-            if (playerList != null) {
-                recyclerViewPlayerSearchResult = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
-                RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter = new RecyclerSearchPlayerResultAdapter(getActivity(), playerList);
+            if (playerUrls != null) {
+                recyclerViewPlayerSearchResult
+                        = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
+                RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
+                        = new RecyclerSearchPlayerResultAdapter(getActivity(), playerNames, playerUrls);
                 recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
                 recyclerViewPlayerSearchResult.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerSearchPlayerResultAdapter.notifyDataSetChanged();

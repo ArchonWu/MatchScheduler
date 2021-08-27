@@ -16,20 +16,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/first_fragment_result_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView_fragment_first" />
 
     <TextView
         android:id="@+id/textView_first_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="290dp"
+        android:layout_height="32dp"
         android:text="TextView in FragmentFirst"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_first"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_fragment_result_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView_fragment_first" />
 
     <Button
         android:id="@+id/button_first"
@@ -38,5 +41,7 @@
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView_fragment_first" />
 </androidx.constraintlayout.widget.ConstraintLayout>
