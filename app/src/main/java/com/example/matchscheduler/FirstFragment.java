@@ -25,8 +25,9 @@ public class FirstFragment extends Fragment {
     private TextView tv;
     private FetchJson fetchProcess;
 
-    private String s1[] = new String[0];
-    private String s2[] = new String[0];
+//    private String s1[] = new String[0];
+//    private String s2[] = new String[0];
+    private String[] s1, s2;
 
     @Override
     public View onCreateView(
@@ -36,6 +37,8 @@ public class FirstFragment extends Fragment {
         // Inflate the layout for this fragment
         theView = inflater.inflate(R.layout.fragment_first, container, false);
         setHasOptionsMenu(true);
+        s1 = new String[0];
+        s2 = new String[0];
         return theView;
     }
 
