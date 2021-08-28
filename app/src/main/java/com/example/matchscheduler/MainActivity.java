@@ -20,8 +20,7 @@ import android.widget.Toast;
 
 // display search result.. go to another fragment after selecting search result to display more
 public class MainActivity extends AppCompatActivity {
-    public static TextView fetchResult;
-    public static FragmentManager fragmentManager;
+//    public static TextView fetchResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fetchResult = findViewById(R.id.textView_searhResult);
+//        fetchResult = findViewById(R.id.textView_searhResult);
     }
 
 

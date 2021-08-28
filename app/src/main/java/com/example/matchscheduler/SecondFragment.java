@@ -27,7 +27,7 @@ public class SecondFragment extends Fragment {
     private String[] playerNames;
     private String[] playerUrls;
     private AsyncBroadcastReceiver asyncBroadcastReceiver;
-//    private static Bundle recyclerStateBundle;
+    //    private static Bundle recyclerStateBundle;
     private Parcelable recyclerState;
 
     @Override
@@ -68,24 +68,18 @@ public class SecondFragment extends Fragment {
 
 
         // useless "previous button"
-        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });
+//        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavHostFragment.findNavController(SecondFragment.this)
+//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+//            }
+//        });
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        recyclerStateBundle = new Bundle();
-//        Parcelable recyclerState = recyclerViewPlayerSearchResult.getLayoutManager().onSaveInstanceState();
-//        recyclerStateBundle.putParcelable("recycler_state_key", recyclerState);
-//        recyclerStateBundle.putStringArray("playerNames_key", playerNames);
-//        recyclerStateBundle.putStringArray("playerUrls_key", playerUrls);
-//        Toast.makeText(getContext(), "onPause() called", Toast.LENGTH_SHORT).show();
         recyclerState = recyclerViewPlayerSearchResult.getLayoutManager().onSaveInstanceState();
         Toast.makeText(getContext(), "onPause() called", Toast.LENGTH_SHORT).show();
     }
@@ -93,13 +87,6 @@ public class SecondFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        if (recyclerStateBundle != null) {
-//            Parcelable recyclerState = recyclerStateBundle.getParcelable("recycler_state_key");
-//            recyclerViewPlayerSearchResult.getLayoutManager().onRestoreInstanceState(recyclerState);
-//            playerNames = recyclerStateBundle.getStringArray("playerNames_key");
-//            playerUrls = recyclerStateBundle.getStringArray("playerUrls_key");
-//            Toast.makeText(getContext(), "onResume() called", Toast.LENGTH_SHORT).show();
-//        }
         recyclerViewPlayerSearchResult.getLayoutManager().onRestoreInstanceState(recyclerState);
         Toast.makeText(getContext(), "onResume() called", Toast.LENGTH_SHORT).show();
     }
@@ -125,7 +112,6 @@ public class SecondFragment extends Fragment {
     private class AsyncBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(getContext(), "received intent", Toast.LENGTH_SHORT).show();
             playerNames = intent.getStringArrayExtra("playerNames");
             playerUrls = intent.getStringArrayExtra("playerUrls");
 
