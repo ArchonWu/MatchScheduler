@@ -1,4 +1,4 @@
-package com.example.matchscheduler;
+package com.example.matchscheduler.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.matchscheduler.R;
 
 public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<RecyclerSearchPlayerResultAdapter.MyViewHolder> {
     private final Context context;

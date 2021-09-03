@@ -67,7 +67,7 @@ public class FetchJson extends AsyncTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Toast.makeText(theContext, "finished searching", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(theContext, "finished searching", Toast.LENGTH_SHORT).show();
 
         // notifies second fragment to update recycler view
         try {

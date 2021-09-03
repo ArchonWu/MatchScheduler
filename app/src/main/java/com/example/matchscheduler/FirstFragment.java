@@ -14,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.matchscheduler.Adapters.RecyclerSavedAdapter;
+
 /*
     Display user previously saved matches
  */
@@ -24,8 +26,6 @@ public class FirstFragment extends Fragment {
     private TextView tv;
     private FetchJson fetchProcess;
 
-//    private String s1[] = new String[0];
-//    private String s2[] = new String[0];
     private String[] s1, s2;
 
     @Override
@@ -49,7 +49,7 @@ public class FirstFragment extends Fragment {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(searchView.getContext(), "Searching: " + query, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(searchView.getContext(), "Searching: " + query, Toast.LENGTH_SHORT).show();
                 searchView.onActionViewCollapsed();
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);

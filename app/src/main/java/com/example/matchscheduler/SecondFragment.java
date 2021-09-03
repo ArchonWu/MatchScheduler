@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,10 +19,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.matchscheduler.Adapters.RecyclerSearchPlayerResultAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /*
     Display search result from search bar
  */
-public class SecondFragment extends Fragment{
+public class SecondFragment extends Fragment {
     private RecyclerView recyclerViewPlayerSearchResult;
     private View theView;
     private String[] playerNames;
@@ -49,7 +67,7 @@ public class SecondFragment extends Fragment{
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("fetchJson_search_player_ok");
             getContext().registerReceiver(asyncBroadcastReceiver, intentFilter);
-            Toast.makeText(getContext(), "set up receiver", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "set up receiver", Toast.LENGTH_SHORT).show();
         }
 
         return theView;
@@ -120,6 +138,7 @@ public class SecondFragment extends Fragment{
                             @Override
                             public void onItemClick(int position) {
                                 Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
+                                initRecyclerViewOnItemClick();
                             }
                         });
                 recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
@@ -129,7 +148,40 @@ public class SecondFragment extends Fragment{
         }
     }
 
-    private void initRecyclerViewOnItemClick(){
+    private void initRecyclerViewOnItemClick() {
+        // TODO: parse player's url
+        // https://stackoverflow.com/questions/19945411/how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listview
+//            JSONObject obj = new JSONObject(loadJsonFromAsset());
+//            filterMatchTime(obj);
+        try {
+            filterMatchTime(loadJsonFromAsset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private String loadJsonFromAsset() {
+        String jsonString = null;
+        try {
+            InputStream is = getActivity().getAssets().open("testParse.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            jsonString = new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return jsonString;
+    }
+
+    private void filterMatchTime(String jsonString) throws IOException {
+        Toast.makeText(getContext(), "in filterMatchTime!", Toast.LENGTH_SHORT).show();
+
+        // TODO: cut text before "Upcoming Matches" & after "Recent Matches"
+        jsonString = jsonString.substring(jsonString.indexOf("Upcoming Matches"), jsonString.indexOf("Recent Matches"));
+        TextView tv = getActivity().findViewById(R.id.textView_second_fragment);
+        tv.setText(jsonString);
     }
 }
