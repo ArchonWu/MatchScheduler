@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.tabs.TabLayout;
+
 /*
     Display search result from search bar
  */
-public class SecondFragment extends Fragment {
+public class SecondFragment extends Fragment{
     private RecyclerView recyclerViewPlayerSearchResult;
     private View theView;
     private String[] playerNames;
@@ -62,33 +65,31 @@ public class SecondFragment extends Fragment {
         recyclerViewPlayerSearchResult
                 = getView().findViewById(R.id.second_fragment_player_search_result_recyclerView);
         RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
-                = new RecyclerSearchPlayerResultAdapter(getActivity(), playerNames, playerUrls);
+                = new RecyclerSearchPlayerResultAdapter(getActivity(),
+                playerNames, playerUrls,
+                new RecyclerSearchPlayerResultAdapter.ItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Toast.makeText(getContext(), "onItemClick() in onViewCreated", Toast.LENGTH_SHORT).show();
+                    }
+                });
         recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
         recyclerViewPlayerSearchResult.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-        // useless "previous button"
-//        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(SecondFragment.this)
-//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-//            }
-//        });
     }
 
     @Override
     public void onPause() {
         super.onPause();
         recyclerState = recyclerViewPlayerSearchResult.getLayoutManager().onSaveInstanceState();
-        Toast.makeText(getContext(), "onPause() called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onPause() called", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         recyclerViewPlayerSearchResult.getLayoutManager().onRestoreInstanceState(recyclerState);
-        Toast.makeText(getContext(), "onResume() called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onResume() called", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -117,7 +118,14 @@ public class SecondFragment extends Fragment {
 
             if (playerUrls != null) {
                 RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
-                        = new RecyclerSearchPlayerResultAdapter(getActivity(), playerNames, playerUrls);
+                        = new RecyclerSearchPlayerResultAdapter(getActivity(),
+                        playerNames, playerUrls,
+                        new RecyclerSearchPlayerResultAdapter.ItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
                 recyclerViewPlayerSearchResult.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerSearchPlayerResultAdapter.notifyDataSetChanged();

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class FirstFragment extends Fragment {
     private RecyclerView recyclerView;
-//    public TextView fetchResult;
     public SearchView searchView;
     private View theView;
     private TextView tv;
@@ -44,7 +43,6 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        fetchResult = getActivity().findViewById(R.id.textView_searhResult);
         searchView = getView().findViewById(R.id.searchView_fragment_first);
         searchView.setQueryHint("Search player id here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -80,12 +78,5 @@ public class FirstFragment extends Fragment {
         recyclerView.setAdapter(recyclerResultAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
     }
 }
