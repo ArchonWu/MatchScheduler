@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.tabs.TabLayout;
 
 /*
     Display search result from search bar
@@ -67,7 +63,7 @@ public class SecondFragment extends Fragment{
         RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
                 = new RecyclerSearchPlayerResultAdapter(getActivity(),
                 playerNames, playerUrls,
-                new RecyclerSearchPlayerResultAdapter.ItemClickListener() {
+                new RecyclerSearchPlayerResultAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
                         Toast.makeText(getContext(), "onItemClick() in onViewCreated", Toast.LENGTH_SHORT).show();
@@ -120,7 +116,7 @@ public class SecondFragment extends Fragment{
                 RecyclerSearchPlayerResultAdapter recyclerSearchPlayerResultAdapter
                         = new RecyclerSearchPlayerResultAdapter(getActivity(),
                         playerNames, playerUrls,
-                        new RecyclerSearchPlayerResultAdapter.ItemClickListener() {
+                        new RecyclerSearchPlayerResultAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
                                 Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
@@ -131,5 +127,9 @@ public class SecondFragment extends Fragment{
                 recyclerSearchPlayerResultAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void initRecyclerViewOnItemClick(){
+
     }
 }

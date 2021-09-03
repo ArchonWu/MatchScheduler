@@ -1,9 +1,6 @@
 package com.example.matchscheduler;
 
-import android.content.ClipData;
-import android.content.ContentProviderClient;
 import android.content.Context;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +15,13 @@ public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<Recy
     private String[] playerNames;
     private String[] playerUrls;
     private int[] isFavImg;
-    private ItemClickListener itemClickListener;
+    private OnItemClickListener onItemClickListener;
 
-    public RecyclerSearchPlayerResultAdapter(Context context, String[] playerNames, String[] playerUrls, ItemClickListener itemClickListener) {
+    public RecyclerSearchPlayerResultAdapter(Context context, String[] playerNames, String[] playerUrls, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.playerNames = playerNames;
         this.playerUrls = playerUrls;
-        this.itemClickListener = itemClickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -32,7 +29,7 @@ public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<Recy
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.view_row_player_search_result, parent, false);
-        return new MyViewHolder(view, itemClickListener);
+        return new MyViewHolder(view, onItemClickListener);
     }
 
     @Override
@@ -40,10 +37,6 @@ public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<Recy
         // dynamically add to recyclerView
         holder.theTextViewPlayerName.setText(playerNames[position]);
         holder.theTextViewPlayerUrl.setText(playerUrls[position]);
-
-        holder.itemView.setOnClickListener(view -> {
-            itemClickListener.onItemClick(position);
-        });
     }
 
     @Override
@@ -55,23 +48,24 @@ public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<Recy
         TextView theTextViewPlayerName;
         TextView theTextViewPlayerUrl;
         ImageView myImage;
-        ItemClickListener itemClickListener;
+        OnItemClickListener onItemClickListener;
 
-        public MyViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             theTextViewPlayerName = itemView.findViewById(R.id.textView_player_name_result);
             theTextViewPlayerUrl = itemView.findViewById(R.id.textView_player_url_result);
             myImage = itemView.findViewById(R.id.img_item_view);
-            this.itemClickListener = itemClickListener;
+            this.onItemClickListener = onItemClickListener;
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onItemClick(getAdapterPosition());
+            onItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 
-    public interface ItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
