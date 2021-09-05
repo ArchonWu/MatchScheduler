@@ -4,6 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchPlayerActivity">
+    tools:context=".PlayerMatchesActivity">
 
+    <TextView
+        android:id="@+id/textView_trimmed"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:text="TextView_trimmed"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_match_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView_match_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_trimmed" />
+
+    <TextView
+        android:id="@+id/textView_left_player"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView_left_player"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_match_time" />
+
+    <TextView
+        android:id="@+id/textView_right_player"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView_right_player"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_left_player" />
+
+    <TextView
+        android:id="@+id/textView_left_race"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView_left_race"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_right_player" />
+
+    <TextView
+        android:id="@+id/textView_right_race"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView_right_race"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_left_race" />
 </androidx.constraintlayout.widget.ConstraintLayout>

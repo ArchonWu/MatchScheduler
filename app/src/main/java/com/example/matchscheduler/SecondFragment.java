@@ -109,18 +109,12 @@ public class SecondFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putStringArray("playerNames", playerNames);
-//        outState.putStringArray("playerUrls", playerUrls);
         Toast.makeText(getContext(), "onSaveInstanceState called", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            playerNames = savedInstanceState.getStringArray("playerNames");
-//            playerUrls = savedInstanceState.getStringArray("playerUrls");
-//        }
         Toast.makeText(getContext(), "onViewStateRestored called", Toast.LENGTH_SHORT).show();
     }
 
@@ -138,7 +132,7 @@ public class SecondFragment extends Fragment {
                             @Override
                             public void onItemClick(int position) {
                                 Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
-                                initRecyclerViewOnItemClick();
+//                                initRecyclerViewOnItemClick();
                             }
                         });
                 recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
@@ -148,40 +142,40 @@ public class SecondFragment extends Fragment {
         }
     }
 
-    private void initRecyclerViewOnItemClick() {
-        // TODO: parse player's url
+    // moving to PlayerMatchActivity
+//    private void initRecyclerViewOnItemClick() {
         // https://stackoverflow.com/questions/19945411/how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listview
 //            JSONObject obj = new JSONObject(loadJsonFromAsset());
 //            filterMatchTime(obj);
-        try {
-            filterMatchTime(loadJsonFromAsset());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//        try {
+//            filterMatchTime(loadJsonFromAsset());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    private String loadJsonFromAsset() {
-        String jsonString = null;
-        try {
-            InputStream is = getActivity().getAssets().open("testParse.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonString = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return jsonString;
-    }
-
-    private void filterMatchTime(String jsonString) throws IOException {
-        Toast.makeText(getContext(), "in filterMatchTime!", Toast.LENGTH_SHORT).show();
-
-        // TODO: cut text before "Upcoming Matches" & after "Recent Matches"
-        jsonString = jsonString.substring(jsonString.indexOf("Upcoming Matches"), jsonString.indexOf("Recent Matches"));
-        TextView tv = getActivity().findViewById(R.id.textView_second_fragment);
-        tv.setText(jsonString);
-    }
+//    private String loadJsonFromAsset() {
+//        String jsonString = null;
+//        try {
+//            InputStream is = getActivity().getAssets().open("testParse.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            jsonString = new String(buffer, StandardCharsets.UTF_8);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return jsonString;
+//    }
+//
+//    private void filterMatchTime(String jsonString) throws IOException {
+//        Toast.makeText(getContext(), "in filterMatchTime!", Toast.LENGTH_SHORT).show();
+//
+//        // TODO: cut text before "Upcoming Matches" & after "Recent Matches"
+//        jsonString = jsonString.substring(jsonString.indexOf("Upcoming Matches"), jsonString.indexOf("Recent Matches"));
+//        TextView tv = getActivity().findViewById(R.id.textView_second_fragment);
+//        tv.setText(jsonString);
+//    }
 }
