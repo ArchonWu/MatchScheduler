@@ -12,19 +12,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class PlayerMatchesActivity extends AppCompatActivity {
-    ArrayList<String> matchTimes = new ArrayList<>();
+    private MatchEntryExtractor matchEntryExtractor;
+    private String playerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_player);
 
-        try {
-            String afterTrim = trimText(loadJsonFromAsset());
-            filterMatchTime(afterTrim);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // TODO: bundle things
+        matchEntryExtractor = new MatchEntryExtractor(playerName, loadJsonFromAsset());
+
+
 
     }
 
@@ -44,30 +43,4 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         return jsonString;
     }
 
-    private String trimText(String jsonString) throws IOException {
-        jsonString = jsonString.substring(jsonString.indexOf("Upcoming Matches"), jsonString.indexOf("Recent Matches"));
-        TextView tv = findViewById(R.id.textView_trimmed);
-        tv.setText(jsonString);
-        return jsonString;
-    }
-
-    private String rightPlayer(String jsonString) {
-        // left player is always the searched player by user
-
-
-        return jsonString;
-    }
-
-    // only for one single match
-    private String filterMatchTime(String jsonString) throws IOException {
-        // default time are in UTC, need to convert
-        String inHere = jsonString.substring(jsonString.indexOf("<span class=\\\"match-countdown\\\">"));
-        String somewhere = inHere.substring(0, inHere.indexOf("</span>"));
-        String morePrecise = somewhere.substring(somewhere.indexOf("<span class=\\\"timer-object timer-object-countdown-only\\\""), somewhere.indexOf("<abbr"));
-        String theActualTime = morePrecise.substring(morePrecise.lastIndexOf(">") + 1);
-
-        TextView tv = findViewById(R.id.textView_match_time);
-        tv.setText(theActualTime);
-        return theActualTime;
-    }
 }
