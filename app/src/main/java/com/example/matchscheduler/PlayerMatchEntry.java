@@ -7,13 +7,16 @@ public class PlayerMatchEntry {
     private String playerName;
     private String playerRace;
     private String opponentName;
+    private String tournamentName;
     private Date date;
     private Time time;
 
-    public PlayerMatchEntry(String playerName, String playerRace, String opponent, Date date, Time time) {
+    public PlayerMatchEntry(String playerName, String playerRace, String opponent,
+                            String tournamentName, Date date, Time time) {
         this.playerName = playerName;
         this.playerRace = playerRace;
         this.opponentName = opponent;
+        this.tournamentName = tournamentName;
         this.date = date;
         this.time = time;
     }
@@ -29,6 +32,8 @@ public class PlayerMatchEntry {
     public String getOpponentName() {
         return opponentName;
     }
+
+    public String getTournamentName(){return tournamentName;}
 
     public Date getDate() {
         return date;

@@ -16,12 +16,14 @@ public class MatchEntryExtractor {
     private String playerName;
     private String allInfoText;
     private String trimmedInfoText;
+    private int totalUpcomingMatches;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
         this.playerMatchEntries = new ArrayList<>();
         this.playerName = playerName;
         this.allInfoText = allInfoText;
         this.trimmedInfoText = getTrimmedInfoText();
+        this.totalUpcomingMatches = getTotalUpcomingMatches();
     }
 
     public ArrayList getPlayerMatchEntryList() {
@@ -34,13 +36,14 @@ public class MatchEntryExtractor {
     }
 
     public void addAllUpcomingMatchesToList() {
-
+        // count # of <table class="wikitable wikitable-striped infobox_matches_content"> in trimmedInfoText
+        // <table class=\"wikitable wikitable-striped infobox_matches_content\">
     }
 
     public void addMatchEntryToList(String playerRace, String opponentName, Date matchDate, Time matchTime) {
 
 
-        PlayerMatchEntry playerMatchEntry = new PlayerMatchEntry(playerName, playerRace, opponentName, matchDate, matchTime);
+        PlayerMatchEntry playerMatchEntry = new PlayerMatchEntry(playerName, playerRace, opponentName, "", matchDate, matchTime);
         playerMatchEntries.add(playerMatchEntry);
     }
 
@@ -58,5 +61,10 @@ public class MatchEntryExtractor {
     public String getTrimmedInfoText() {
         String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
         return trimmedText;
+    }
+
+    private int getTotalUpcomingMatches() {
+        totalUpcomingMatches = 0;
+        return totalUpcomingMatches;
     }
 }

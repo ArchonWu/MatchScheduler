@@ -56,7 +56,7 @@ public class RecyclerSearchPlayerResultAdapter extends RecyclerView.Adapter<Recy
             super(itemView);
             theTextViewPlayerName = itemView.findViewById(R.id.textView_player_name_result);
             theTextViewPlayerUrl = itemView.findViewById(R.id.textView_player_url_result);
-            myImage = itemView.findViewById(R.id.img_item_view);
+            myImage = itemView.findViewById(R.id.imageView_player_isFavourite_result);
             this.onItemClickListener = onItemClickListener;
             itemView.setOnClickListener(this);
         }

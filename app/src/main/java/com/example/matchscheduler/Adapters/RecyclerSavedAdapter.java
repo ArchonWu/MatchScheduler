@@ -32,7 +32,7 @@ public class RecyclerSavedAdapter extends RecyclerView.Adapter<RecyclerSavedAdap
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.view_row_tournament, parent, false);
+        View view = inflater.inflate(R.layout.view_row_saved_matches, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -55,9 +55,9 @@ public class RecyclerSavedAdapter extends RecyclerView.Adapter<RecyclerSavedAdap
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            myText1 = itemView.findViewById(R.id.tournament_name_txt);
-            myText2 = itemView.findViewById(R.id.time_txt);
-            myImage = itemView.findViewById(R.id.img_item_view);
+//            myText1 = itemView.findViewById(R.id.tournament_name_txt);
+//            myText2 = itemView.findViewById(R.id.time_txt);
+//            myImage = itemView.findViewById(R.id.imageView_player_isFavourite_result);
         }
     }
 }
