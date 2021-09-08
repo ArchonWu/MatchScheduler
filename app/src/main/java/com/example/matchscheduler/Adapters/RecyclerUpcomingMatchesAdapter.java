@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<RecyclerUpcomingMatchesAdapter.MyViewHolder> {
     private final Context context;
     private ArrayList<PlayerMatchEntry> playerMatchEntries;
-    //    private PlayerMatchEntry playerMatchEntry;
     private OnItemClickListener onItemClickListener;
 
     public RecyclerUpcomingMatchesAdapter(Context context, ArrayList<PlayerMatchEntry> playerMatchEntries, OnItemClickListener onItemClickListener) {

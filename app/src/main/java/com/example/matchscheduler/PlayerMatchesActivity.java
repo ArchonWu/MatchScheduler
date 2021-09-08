@@ -31,12 +31,16 @@ public class PlayerMatchesActivity extends AppCompatActivity {
 
         // test
         matchEntryExtractor = new MatchEntryExtractor(playerName, loadJsonFromAsset());
-        allInfoString = matchEntryExtractor.getTrimmedInfoText();
+        allInfoString = matchEntryExtractor.getTrimmedUpcomingText();
         PlayerMatchEntry playerMatchEntryTest =
                 new PlayerMatchEntry("Neeb", "p", "PartinG",
                         "WardiTv", new Date(), new Time(10000));
+        PlayerMatchEntry playerMatchEntryTest2 =
+                new PlayerMatchEntry("Dream", "t", "??",
+                        "TN", new Date(), new Time(100000000));
         playerMatchEntries = new ArrayList<>();
         playerMatchEntries.add(playerMatchEntryTest);
+        playerMatchEntries.add(playerMatchEntryTest2);
 
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);

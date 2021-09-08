@@ -1,14 +1,8 @@
 package com.example.matchscheduler;
 
-import android.content.Context;
-import android.widget.TextView;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MatchEntryExtractor {
@@ -17,38 +11,39 @@ public class MatchEntryExtractor {
     private String allInfoText;
     private String trimmedInfoText;
     private int totalUpcomingMatches;
+    private String[] dividedUpcomingMatches;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
         this.playerMatchEntries = new ArrayList<>();
         this.playerName = playerName;
         this.allInfoText = allInfoText;
-        this.trimmedInfoText = getTrimmedInfoText();
+        this.trimmedInfoText = getTrimmedUpcomingText();
         this.totalUpcomingMatches = getTotalUpcomingMatches();
+        this.dividedUpcomingMatches = getDividedUpcomingMatches();
     }
 
-    public ArrayList getPlayerMatchEntryList() {
+    protected ArrayList getPlayerMatchEntryList() {
         return playerMatchEntries;
     }
 
-    public String getLeftPlayer() {
+    protected String getLeftPlayer() {
         // left player is always the searched player by user
         return playerName;
     }
 
-    public void addAllUpcomingMatchesToList() {
-        // count # of <table class="wikitable wikitable-striped infobox_matches_content"> in trimmedInfoText
-        // <table class=\"wikitable wikitable-striped infobox_matches_content\">
+    protected void addAllUpcomingMatchesToList() {
+        for (int i = 0; i < totalUpcomingMatches; i++) {
+
+        }
     }
 
-    public void addMatchEntryToList(String playerRace, String opponentName, Date matchDate, Time matchTime) {
-
-
+    private void addMatchEntryToList(String playerRace, String opponentName, Date matchDate, Time matchTime) {
         PlayerMatchEntry playerMatchEntry = new PlayerMatchEntry(playerName, playerRace, opponentName, "", matchDate, matchTime);
         playerMatchEntries.add(playerMatchEntry);
     }
 
     // only for one single match
-    public String filterMatchDateTime(String jsonString) throws IOException {
+    protected String filterMatchDateTime(String jsonString) throws IOException {
         // TODO: default time are in UTC, need to convert
         String inHere = jsonString.substring(jsonString.indexOf("<span class=\\\"match-countdown\\\">"));
         String somewhere = inHere.substring(0, inHere.indexOf("</span>"));
@@ -58,13 +53,19 @@ public class MatchEntryExtractor {
         return theActualDateTime;
     }
 
-    public String getTrimmedInfoText() {
+    protected String getTrimmedUpcomingText() {
         String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
         return trimmedText;
     }
 
-    private int getTotalUpcomingMatches() {
-        totalUpcomingMatches = 0;
+    protected int getTotalUpcomingMatches() {
+        String checkStr = trimmedInfoText;
+        totalUpcomingMatches = checkStr.split("team-left").length - 1;
         return totalUpcomingMatches;
+    }
+
+    protected String[] getDividedUpcomingMatches() {
+        String[] divided = trimmedInfoText.split("team-left", 0);
+        return divided;
     }
 }
