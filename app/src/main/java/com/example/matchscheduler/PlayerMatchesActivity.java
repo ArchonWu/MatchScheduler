@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.matchscheduler.Adapters.RecyclerUpcomingMatchesAdapter;
 
@@ -27,10 +28,15 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_player);
 
-        // TODO: load from bundle
+        playerName = getIntent().getExtras().getString("playerName");
+        Toast.makeText(this, playerName, Toast.LENGTH_SHORT).show();
 
-        // test
-        matchEntryExtractor = new MatchEntryExtractor(playerName, loadJsonFromAsset());
+        // TODO: parse page with playerName, and save it to file in assets
+
+        allInfoString = loadJsonFromAsset();
+
+        // test, remove later
+        matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
         allInfoString = matchEntryExtractor.getTrimmedUpcomingText();
         PlayerMatchEntry playerMatchEntryTest =
                 new PlayerMatchEntry("Neeb", "p", "PartinG",
@@ -41,7 +47,6 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         playerMatchEntries = new ArrayList<>();
         playerMatchEntries.add(playerMatchEntryTest);
         playerMatchEntries.add(playerMatchEntryTest2);
-
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
         RecyclerUpcomingMatchesAdapter recyclerUpcomingMatchesAdapter

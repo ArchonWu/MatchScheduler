@@ -133,6 +133,9 @@ public class SecondFragment extends Fragment {
                             public void onItemClick(int position) {
                                 Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
 //                                initRecyclerViewOnItemClick();
+                                Intent myIntent = new Intent(getContext(), PlayerMatchesActivity.class);
+                                myIntent.putExtra("playerName", playerNames[position]);
+                                startActivity(myIntent);
                             }
                         });
                 recyclerViewPlayerSearchResult.setAdapter(recyclerSearchPlayerResultAdapter);
@@ -144,7 +147,7 @@ public class SecondFragment extends Fragment {
 
     // moving to PlayerMatchActivity
 //    private void initRecyclerViewOnItemClick() {
-        // https://stackoverflow.com/questions/19945411/how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listview
+    // https://stackoverflow.com/questions/19945411/how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listview
 //            JSONObject obj = new JSONObject(loadJsonFromAsset());
 //            filterMatchTime(obj);
 //        try {
