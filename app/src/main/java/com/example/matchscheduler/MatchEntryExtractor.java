@@ -3,6 +3,7 @@ package com.example.matchscheduler;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class MatchEntryExtractor {
@@ -12,6 +13,7 @@ public class MatchEntryExtractor {
     private String trimmedInfoText;
     private int totalUpcomingMatches;
     private String[] dividedUpcomingMatches;
+    private String[] opponentNames;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
         this.playerMatchEntries = new ArrayList<>();
@@ -20,9 +22,11 @@ public class MatchEntryExtractor {
         this.trimmedInfoText = getTrimmedUpcomingText();
         this.totalUpcomingMatches = getTotalUpcomingMatches();
         this.dividedUpcomingMatches = getDividedUpcomingMatches();
+
+//        this.opponentNames = getOpponentNames();
     }
 
-    protected ArrayList getPlayerMatchEntryList() {
+    protected ArrayList<PlayerMatchEntry> getPlayerMatchEntryList() {
         return playerMatchEntries;
     }
 
@@ -33,7 +37,10 @@ public class MatchEntryExtractor {
 
     protected void addAllUpcomingMatchesToList() {
         for (int i = 0; i < totalUpcomingMatches; i++) {
-
+            PlayerMatchEntry playerMatchEntry =
+                    new PlayerMatchEntry(getLeftPlayer(), "...", getOpponentNames()[i], "tn",
+                            new Date(), new Time(0));
+            playerMatchEntries.add(playerMatchEntry);
         }
     }
 
@@ -65,7 +72,23 @@ public class MatchEntryExtractor {
     }
 
     protected String[] getDividedUpcomingMatches() {
-        String[] divided = trimmedInfoText.split("team-left", 0);
-        return divided;
+        if (dividedUpcomingMatches == null) {
+            String[] split = trimmedInfoText.split("team-left", 0);
+            String[] divided = Arrays.copyOfRange(split, 1, split.length);
+            return divided;
+        } else return dividedUpcomingMatches;
+    }
+
+    protected String[] getOpponentNames() {
+        if (opponentNames == null) {
+            String[] opponentNames = new String[totalUpcomingMatches];
+            for (int i = 0; i < totalUpcomingMatches; i++) {
+                String temp = dividedUpcomingMatches[i].substring(0, dividedUpcomingMatches[i].lastIndexOf("</a></span></td>"));
+                temp = temp.substring(temp.lastIndexOf(">"));
+                temp = temp.substring(1);
+                opponentNames[i] = temp;
+            }
+            return opponentNames;
+        } else return opponentNames;
     }
 }

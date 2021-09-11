@@ -77,14 +77,21 @@ public class MatchEntryExtractorTest {
     @Test
     public void testGetDividedUpcomingMatches() {
         int test1 = matchEntryExtractor1.getDividedUpcomingMatches().length;
-        int expected1 = 2;
-        assertEquals(test1, expected1);
+        int expected1 = 1;
+        assertEquals(expected1, test1);
 
         int test2 = matchEntryExtractor2.getDividedUpcomingMatches().length;
-        int expected2 = 3;
-        System.out.println(matchEntryExtractor2.getDividedUpcomingMatches()[0]);
-        System.out.println(matchEntryExtractor2.getDividedUpcomingMatches()[1]);
-        System.out.println(matchEntryExtractor2.getDividedUpcomingMatches()[2]);
-        assertEquals(test2, expected2);
+        int expected2 = 2;
+        assertEquals(expected2, test2);
+    }
+
+    @Test
+    public void testGetOpponentNames(){
+        String testName1 = matchEntryExtractor2.getOpponentNames()[0];
+        String expected1 = "ByuL";
+        String testName2 = matchEntryExtractor2.getOpponentNames()[1];
+        String expected2 = "Zest";
+        assertEquals(expected1, testName1);
+        assertEquals(expected2, testName2);
     }
 }

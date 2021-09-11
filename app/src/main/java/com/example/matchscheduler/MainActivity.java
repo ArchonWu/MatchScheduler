@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // testing PlayerMatchesActivity
-//        Intent myIntent = new Intent(this, PlayerMatchesActivity.class);
-//        startActivity(myIntent);
+        Intent myIntent = new Intent(this, PlayerMatchesActivity.class);
+        startActivity(myIntent);
     }
 
 

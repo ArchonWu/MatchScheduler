@@ -28,8 +28,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_player);
 
-        playerName = getIntent().getExtras().getString("playerName");
-        Toast.makeText(this, playerName, Toast.LENGTH_SHORT).show();
+//            playerName = getIntent().getExtras().getString("playerName");
+//            Toast.makeText(this, playerName, Toast.LENGTH_SHORT).show();
 
         // TODO: parse page with playerName, and save it to file in assets
 
@@ -37,16 +37,16 @@ public class PlayerMatchesActivity extends AppCompatActivity {
 
         // test, remove later
         matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
-        allInfoString = matchEntryExtractor.getTrimmedUpcomingText();
-        PlayerMatchEntry playerMatchEntryTest =
-                new PlayerMatchEntry("Neeb", "p", "PartinG",
-                        "WardiTv", new Date(), new Time(10000));
-        PlayerMatchEntry playerMatchEntryTest2 =
-                new PlayerMatchEntry("Dream", "t", "??",
-                        "TN", new Date(), new Time(100000000));
-        playerMatchEntries = new ArrayList<>();
-        playerMatchEntries.add(playerMatchEntryTest);
-        playerMatchEntries.add(playerMatchEntryTest2);
+//        PlayerMatchEntry playerMatchEntryTest =
+//                new PlayerMatchEntry("Neeb", "p", "PartinG",
+//                        "WardiTv", new Date(), new Time(10000));
+//        PlayerMatchEntry playerMatchEntryTest2 =
+//                new PlayerMatchEntry("Dream", "t", "??",
+//                        "TN", new Date(), new Time(100000000));
+//        playerMatchEntries = new ArrayList<>();
+//        playerMatchEntries.add(playerMatchEntryTest);
+//        playerMatchEntries.add(playerMatchEntryTest2);
+        playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
         RecyclerUpcomingMatchesAdapter recyclerUpcomingMatchesAdapter
