@@ -22,11 +22,13 @@ public class MatchEntryExtractor {
         this.trimmedInfoText = getTrimmedUpcomingText();
         this.totalUpcomingMatches = getTotalUpcomingMatches();
         this.dividedUpcomingMatches = getDividedUpcomingMatches();
-
-//        this.opponentNames = getOpponentNames();
+        this.opponentNames = getOpponentNames();
     }
 
     protected ArrayList<PlayerMatchEntry> getPlayerMatchEntryList() {
+        if (playerMatchEntries.size() == 0) {
+            addAllUpcomingMatchesToList();
+        }
         return playerMatchEntries;
     }
 
@@ -38,18 +40,12 @@ public class MatchEntryExtractor {
     protected void addAllUpcomingMatchesToList() {
         for (int i = 0; i < totalUpcomingMatches; i++) {
             PlayerMatchEntry playerMatchEntry =
-                    new PlayerMatchEntry(getLeftPlayer(), "...", getOpponentNames()[i], "tn",
+                    new PlayerMatchEntry(getLeftPlayer(), "...", opponentNames[i], "tn000",
                             new Date(), new Time(0));
             playerMatchEntries.add(playerMatchEntry);
         }
     }
 
-    private void addMatchEntryToList(String playerRace, String opponentName, Date matchDate, Time matchTime) {
-        PlayerMatchEntry playerMatchEntry = new PlayerMatchEntry(playerName, playerRace, opponentName, "", matchDate, matchTime);
-        playerMatchEntries.add(playerMatchEntry);
-    }
-
-    // only for one single match
     protected String filterMatchDateTime(String jsonString) throws IOException {
         // TODO: default time are in UTC, need to convert
         String inHere = jsonString.substring(jsonString.indexOf("<span class=\\\"match-countdown\\\">"));
@@ -80,7 +76,6 @@ public class MatchEntryExtractor {
     }
 
     protected String[] getOpponentNames() {
-        if (opponentNames == null) {
             String[] opponentNames = new String[totalUpcomingMatches];
             for (int i = 0; i < totalUpcomingMatches; i++) {
                 String temp = dividedUpcomingMatches[i].substring(0, dividedUpcomingMatches[i].lastIndexOf("</a></span></td>"));
@@ -89,6 +84,10 @@ public class MatchEntryExtractor {
                 opponentNames[i] = temp;
             }
             return opponentNames;
-        } else return opponentNames;
+    }
+
+    protected String[] getTournamentNames(){
+        //TODO: !
+        return null;
     }
 }
