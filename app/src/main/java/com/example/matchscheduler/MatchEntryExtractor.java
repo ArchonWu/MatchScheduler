@@ -44,7 +44,7 @@ public class MatchEntryExtractor {
     protected void addAllUpcomingMatchesToList() {
         for (int i = 0; i < totalUpcomingMatches; i++) {
             PlayerMatchEntry playerMatchEntry =
-                    new PlayerMatchEntry(getLeftPlayer(), "...", opponentNames[i], "tn000",
+                    new PlayerMatchEntry(getLeftPlayer(), "...", opponentNames[i], tournamentNames[i],
                             new Date(), new Time(0));
             playerMatchEntries.add(playerMatchEntry);
         }
