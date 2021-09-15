@@ -14,6 +14,8 @@ public class MatchEntryExtractor {
     private int totalUpcomingMatches;
     private String[] dividedUpcomingMatches;
     private String[] opponentNames;
+    private String[] tournamentNames;
+    private boolean init;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
         this.playerMatchEntries = new ArrayList<>();
@@ -23,6 +25,8 @@ public class MatchEntryExtractor {
         this.totalUpcomingMatches = getTotalUpcomingMatches();
         this.dividedUpcomingMatches = getDividedUpcomingMatches();
         this.opponentNames = getOpponentNames();
+        this.tournamentNames = getTournamentNames();
+        this.init = true;
     }
 
     protected ArrayList<PlayerMatchEntry> getPlayerMatchEntryList() {
@@ -57,37 +61,48 @@ public class MatchEntryExtractor {
     }
 
     protected String getTrimmedUpcomingText() {
+        if (init) return trimmedInfoText;
         String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
         return trimmedText;
     }
 
     protected int getTotalUpcomingMatches() {
+        if (init) return totalUpcomingMatches;
         String checkStr = trimmedInfoText;
         totalUpcomingMatches = checkStr.split("team-left").length - 1;
         return totalUpcomingMatches;
     }
 
     protected String[] getDividedUpcomingMatches() {
-        if (dividedUpcomingMatches == null) {
-            String[] split = trimmedInfoText.split("team-left", 0);
-            String[] divided = Arrays.copyOfRange(split, 1, split.length);
-            return divided;
-        } else return dividedUpcomingMatches;
+        if (init) return dividedUpcomingMatches;
+        String[] split = trimmedInfoText.split("team-left", 0);
+        String[] divided = Arrays.copyOfRange(split, 1, split.length);
+        return divided;
     }
 
     protected String[] getOpponentNames() {
-            String[] opponentNames = new String[totalUpcomingMatches];
-            for (int i = 0; i < totalUpcomingMatches; i++) {
-                String temp = dividedUpcomingMatches[i].substring(0, dividedUpcomingMatches[i].lastIndexOf("</a></span></td>"));
-                temp = temp.substring(temp.lastIndexOf(">"));
-                temp = temp.substring(1);
-                opponentNames[i] = temp;
-            }
-            return opponentNames;
+        if (init) return opponentNames;
+        String[] opponentNames = new String[totalUpcomingMatches];
+        for (int i = 0; i < totalUpcomingMatches; i++) {
+            String temp = dividedUpcomingMatches[i].substring(0, dividedUpcomingMatches[i].lastIndexOf("</a></span></td>"));
+            temp = temp.substring(temp.lastIndexOf(">"));
+            temp = temp.substring(1);
+            opponentNames[i] = temp;
+        }
+        return opponentNames;
     }
 
-    protected String[] getTournamentNames(){
-        //TODO: !
-        return null;
+    protected String[] getTournamentNames() {
+        if (init) return tournamentNames;
+        String[] tournamentNames = new String[totalUpcomingMatches];
+        for (int i = 0; i < totalUpcomingMatches; i++) {
+            String targetStr = dividedUpcomingMatches[i];
+            String key = "</a>&#160;</div></";
+            String temp = targetStr.substring(0, targetStr.lastIndexOf(key));
+            temp = temp.substring(temp.lastIndexOf("\\\">"));
+            temp = temp.substring(3);
+            tournamentNames[i] = temp;
+        }
+        return tournamentNames;
     }
 }

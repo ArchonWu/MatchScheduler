@@ -86,11 +86,21 @@ public class MatchEntryExtractorTest {
     }
 
     @Test
-    public void testGetOpponentNames(){
+    public void testGetOpponentNames() {
         String testName1 = matchEntryExtractor2.getOpponentNames()[0];
         String expected1 = "ByuL";
         String testName2 = matchEntryExtractor2.getOpponentNames()[1];
         String expected2 = "Zest";
+        assertEquals(expected1, testName1);
+        assertEquals(expected2, testName2);
+    }
+
+    @Test
+    public void testGetTournamentNames() {
+        String testName1 = matchEntryExtractor2.getTournamentNames()[0];
+        String expected1 = "ITaX Super Series #63";
+        String testName2 = matchEntryExtractor2.getTournamentNames()[1];
+        String expected2 = "2021 GSL S3: Code S";
         assertEquals(expected1, testName1);
         assertEquals(expected2, testName2);
     }

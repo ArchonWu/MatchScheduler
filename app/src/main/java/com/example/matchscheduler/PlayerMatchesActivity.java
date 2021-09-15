@@ -80,8 +80,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     }
 
     private void doOkHttpRequest() {
-        playerNameHttp = "Rogue";
-        playerName = "Rogue";
+        playerName = "Zest";
+        playerNameHttp = playerName.replace(' ', '_');
         String urlRequest = "https://liquipedia.net/starcraft2/api.php?action=parse&format=json&page=" + playerNameHttp + "&prop=text";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
