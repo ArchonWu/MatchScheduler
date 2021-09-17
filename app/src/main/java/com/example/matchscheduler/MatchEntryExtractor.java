@@ -62,8 +62,12 @@ public class MatchEntryExtractor {
 
     protected String getTrimmedUpcomingText() {
         if (init) return trimmedInfoText;
-        String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
-        return trimmedText;
+        int upcomingIndex = allInfoText.indexOf("Upcoming Matches");
+        int recentIndex = allInfoText.indexOf("Recent Matches");
+        if (upcomingIndex > 0 && recentIndex > 0) {
+            String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
+            return trimmedText;
+        } else return "ERROR";
     }
 
     protected int getTotalUpcomingMatches() {

@@ -42,13 +42,14 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_player);
 
         context = this;
-        playerName = "?";
+        playerName = "PartinG";        // test
         if (getIntent().hasExtra("playerName")) {
             playerName = getIntent().getExtras().getString("playerName");
             Toast.makeText(this, playerName, Toast.LENGTH_SHORT).show();
         }
 
-        doOkHttpRequest();
+        if (!playerName.equals(""))
+            doOkHttpRequest();
 
         allInfoString = loadJsonFromAsset();
 
@@ -56,8 +57,6 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
-//        RecyclerUpcomingMatchesAdapter recyclerUpcomingMatchesAdapter
-//                = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, null);
         recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, null);
         recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
         recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
@@ -80,7 +79,6 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     }
 
     private void doOkHttpRequest() {
-        playerName = "Zest";
         playerNameHttp = playerName.replace(' ', '_');
         String urlRequest = "https://liquipedia.net/starcraft2/api.php?action=parse&format=json&page=" + playerNameHttp + "&prop=text";
         OkHttpClient client = new OkHttpClient();

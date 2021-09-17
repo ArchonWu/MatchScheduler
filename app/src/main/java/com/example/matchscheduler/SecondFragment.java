@@ -144,41 +144,4 @@ public class SecondFragment extends Fragment {
             }
         }
     }
-
-    // moving to PlayerMatchActivity
-//    private void initRecyclerViewOnItemClick() {
-    // https://stackoverflow.com/questions/19945411/how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listview
-//            JSONObject obj = new JSONObject(loadJsonFromAsset());
-//            filterMatchTime(obj);
-//        try {
-//            filterMatchTime(loadJsonFromAsset());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private String loadJsonFromAsset() {
-//        String jsonString = null;
-//        try {
-//            InputStream is = getActivity().getAssets().open("testParse.json");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            jsonString = new String(buffer, StandardCharsets.UTF_8);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//        return jsonString;
-//    }
-//
-//    private void filterMatchTime(String jsonString) throws IOException {
-//        Toast.makeText(getContext(), "in filterMatchTime!", Toast.LENGTH_SHORT).show();
-//
-//        // TODO: cut text before "Upcoming Matches" & after "Recent Matches"
-//        jsonString = jsonString.substring(jsonString.indexOf("Upcoming Matches"), jsonString.indexOf("Recent Matches"));
-//        TextView tv = getActivity().findViewById(R.id.textView_second_fragment);
-//        tv.setText(jsonString);
-//    }
 }
