@@ -37,16 +37,18 @@ public class MatchEntryExtractorTest {
 
     @Test
     public void testTrimText() {
-        String test = matchEntryExtractor1.getTrimmedUpcomingText();
+        String test = "";
         String expected = "";
         try {
+            test = matchEntryExtractor1.getTrimmedUpcomingText();
+            expected = "";
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("testAfterTrim.txt");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             expected = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException exception) {
+        } catch (IOException | ProcessingDataException exception) {
         }
         assertEquals(expected, test);
     }

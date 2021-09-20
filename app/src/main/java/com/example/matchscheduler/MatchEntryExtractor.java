@@ -18,10 +18,21 @@ public class MatchEntryExtractor {
     private boolean init;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
+        initiate(playerName, allInfoText);
+    }
+
+    private void initiate(String playerName, String allInfoText) {
         this.playerMatchEntries = new ArrayList<>();
         this.playerName = playerName;
         this.allInfoText = allInfoText;
-        this.trimmedInfoText = getTrimmedUpcomingText();
+        try {
+            this.trimmedInfoText = getTrimmedUpcomingText();
+        } catch (ProcessingDataException e) {
+            playerMatchEntries.add(new PlayerMatchEntry("", "", "",
+                    "No Upcoming Matches Found", new Date(), new Time(0)));
+            this.init = true;
+            e.printStackTrace();
+        }
         this.totalUpcomingMatches = getTotalUpcomingMatches();
         this.dividedUpcomingMatches = getDividedUpcomingMatches();
         this.opponentNames = getOpponentNames();
@@ -30,8 +41,9 @@ public class MatchEntryExtractor {
     }
 
     protected ArrayList<PlayerMatchEntry> getPlayerMatchEntryList() {
-        if (playerMatchEntries.size() == 0) {
+        if (playerMatchEntries.size() == 0 && init) {
             addAllUpcomingMatchesToList();
+            return playerMatchEntries;
         }
         return playerMatchEntries;
     }
@@ -60,14 +72,14 @@ public class MatchEntryExtractor {
         return theActualDateTime;
     }
 
-    protected String getTrimmedUpcomingText() {
+    protected String getTrimmedUpcomingText() throws ProcessingDataException {
         if (init) return trimmedInfoText;
         int upcomingIndex = allInfoText.indexOf("Upcoming Matches");
         int recentIndex = allInfoText.indexOf("Recent Matches");
-        if (upcomingIndex > 0 && recentIndex > 0) {
-            String trimmedText = allInfoText.substring(allInfoText.indexOf("Upcoming Matches"), allInfoText.indexOf("Recent Matches"));
-            return trimmedText;
-        } else return "ERROR";
+        if (upcomingIndex < 0) throw new ProcessingDataException("Player has no upcoming matches!");
+        String trimmedText = allInfoText.substring(upcomingIndex, recentIndex);
+        return trimmedText;
+
     }
 
     protected int getTotalUpcomingMatches() {

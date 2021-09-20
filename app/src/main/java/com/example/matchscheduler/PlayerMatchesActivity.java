@@ -42,24 +42,24 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_player);
 
         context = this;
-        playerName = "PartinG";        // test
+        playerName = "";
         if (getIntent().hasExtra("playerName")) {
             playerName = getIntent().getExtras().getString("playerName");
-            Toast.makeText(this, playerName, Toast.LENGTH_SHORT).show();
         }
 
+        recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
         if (!playerName.equals(""))
             doOkHttpRequest();
+        else {
+            //        allInfoString = loadJsonFromAsset();
+            allInfoString = "";
+            matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
+            playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
-        allInfoString = loadJsonFromAsset();
-
-        matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
-        playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
-
-        recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
-        recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, null);
-        recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
-        recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
+            recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, null);
+            recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
+            recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
     private String loadJsonFromAsset() {
@@ -113,7 +113,7 @@ public class PlayerMatchesActivity extends AppCompatActivity {
 //                                TextView tv = findViewById(R.id.textView_trimmed);
 //                                tv.setText(matchEntryExtractor.getTrimmedUpcomingText());
 
-                                // TODO: save to assets
+                                // TODO: save response to assets
 
                             }
                         });

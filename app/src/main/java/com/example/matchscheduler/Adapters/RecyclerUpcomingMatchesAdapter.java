@@ -38,8 +38,15 @@ public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<Recycle
         holder.textViewPlayerName.setText(playerMatchEntries.get(position).getPlayerName());
         holder.textViewRightPlayer.setText(playerMatchEntries.get(position).getOpponentName());
         holder.textViewTournamentName.setText(playerMatchEntries.get(position).getTournamentName());
-        holder.textViewDate.setText(playerMatchEntries.get(position).getDate().toString());
-        holder.textViewTime.setText(playerMatchEntries.get(position).getTime().toString());
+
+        String checkIfHasUpcoming = playerMatchEntries.get(position).getTournamentName();
+        if (!checkIfHasUpcoming.equals("No Upcoming Matches Found")) {
+            holder.textViewDate.setText(playerMatchEntries.get(position).getDate().toString());
+            holder.textViewTime.setText(playerMatchEntries.get(position).getTime().toString());
+        }else{
+            holder.textViewDate.setText("");
+            holder.textViewTime.setText("");
+        }
     }
 
     @Override
