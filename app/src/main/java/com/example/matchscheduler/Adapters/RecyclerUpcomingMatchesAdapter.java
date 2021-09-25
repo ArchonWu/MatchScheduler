@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,15 +39,20 @@ public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<Recycle
         holder.textViewPlayerName.setText(playerMatchEntries.get(position).getPlayerName());
         holder.textViewRightPlayer.setText(playerMatchEntries.get(position).getOpponentName());
         holder.textViewTournamentName.setText(playerMatchEntries.get(position).getTournamentName());
+        holder.textViewBestOf.setText("");
 
         String checkIfHasUpcoming = playerMatchEntries.get(position).getTournamentName();
         if (!checkIfHasUpcoming.equals("No Upcoming Matches Found")) {
             holder.textViewDate.setText(playerMatchEntries.get(position).getDate().toString());
             holder.textViewTime.setText(playerMatchEntries.get(position).getTime().toString());
-        }else{
+        } else {
             holder.textViewDate.setText("");
             holder.textViewTime.setText("");
         }
+        if (!playerMatchEntries.get(position).getIsAdded())
+            holder.imageViewIsAdded.setImageResource(R.drawable.ic_is_checked_false);
+        else
+            holder.imageViewIsAdded.setImageResource(R.drawable.ic_is_checked_true);
     }
 
     @Override
@@ -55,7 +61,8 @@ public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<Recycle
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements android.view.View.OnClickListener {
-        TextView textViewPlayerName, textViewRightPlayer, textViewTournamentName, textViewDate, textViewTime;
+        TextView textViewPlayerName, textViewRightPlayer, textViewTournamentName, textViewDate, textViewTime, textViewBestOf;
+        ImageView imageViewIsAdded;
         RecyclerUpcomingMatchesAdapter.OnItemClickListener onItemClickListener;
 
         public MyViewHolder(@NonNull View itemView, RecyclerUpcomingMatchesAdapter.OnItemClickListener onItemClickListener) {
@@ -65,6 +72,8 @@ public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<Recycle
             textViewTournamentName = itemView.findViewById(R.id.tournament_name_upcoming);
             textViewDate = itemView.findViewById(R.id.textView_date_upcoming);
             textViewTime = itemView.findViewById(R.id.textView_time_upcoming);
+            textViewBestOf = itemView.findViewById(R.id.textView_ignore);
+            imageViewIsAdded = itemView.findViewById(R.id.imageView_isAdded);
             this.onItemClickListener = onItemClickListener;
             itemView.setOnClickListener(this);
         }

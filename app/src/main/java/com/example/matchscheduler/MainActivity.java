@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // testing PlayerMatchesActivity
+//         testing PlayerMatchesActivity
 //        Intent myIntent = new Intent(this, PlayerMatchesActivity.class);
 //        startActivity(myIntent);
     }

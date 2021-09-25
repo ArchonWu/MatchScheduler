@@ -2,12 +2,16 @@ package com.example.matchscheduler;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,7 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewPlayerUpcomingMatchesResult;
     private RecyclerUpcomingMatchesAdapter recyclerUpcomingMatchesAdapter;
     private ArrayList<PlayerMatchEntry> playerMatchEntries;
+    private ArrayList<PlayerMatchEntry> addedUpcomingMatchEntries;
     private String playerName;
     private String playerNameHttp;
     private String allInfoString;
@@ -42,7 +47,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_player);
 
         context = this;
-        playerName = "";
+        playerName = "Neeb";
+        addedUpcomingMatchEntries = new ArrayList<>();
         if (getIntent().hasExtra("playerName")) {
             playerName = getIntent().getExtras().getString("playerName");
         }
@@ -51,12 +57,17 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         if (!playerName.equals(""))
             doOkHttpRequest();
         else {
-            //        allInfoString = loadJsonFromAsset();
-            allInfoString = "";
+            allInfoString = loadJsonFromAsset();
+//            allInfoString = "";
             matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
             playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
-            recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, null);
+            recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    initOnClickListener(position);
+                }
+            });
             recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
             recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
         }
@@ -105,13 +116,17 @@ public class PlayerMatchesActivity extends AppCompatActivity {
                                 matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
                                 playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
-                                recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(context, playerMatchEntries, null);
+                                recyclerUpcomingMatchesAdapter
+                                        = new RecyclerUpcomingMatchesAdapter(context, playerMatchEntries,
+                                        new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(int position) {
+                                                initOnClickListener(position);
+                                            }
+                                        });
                                 recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
                                 recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(context));
                                 recyclerUpcomingMatchesAdapter.notifyDataSetChanged();
-
-//                                TextView tv = findViewById(R.id.textView_trimmed);
-//                                tv.setText(matchEntryExtractor.getTrimmedUpcomingText());
 
                                 // TODO: save response to assets
 
@@ -120,6 +135,20 @@ public class PlayerMatchesActivity extends AppCompatActivity {
                     }
                 }
             });
+    }
+
+    private void initOnClickListener(int position) {
+        Toast.makeText(context, "onItemClick() in UpcomingMatchesActivity", Toast.LENGTH_SHORT).show();
+        if (!playerMatchEntries.get(position).getIsAdded()) {
+            playerMatchEntries.get(position).setIsAdded(true);
+            addedUpcomingMatchEntries.add(playerMatchEntries.get(position));
+            //TODO: SAVE TO JSON
+        } else {
+            playerMatchEntries.get(position).setIsAdded(false);
+            addedUpcomingMatchEntries.remove(playerMatchEntries.get(position));
+            // TODO: REMOVE FROM JSON
+        }
+        recyclerUpcomingMatchesAdapter.notifyItemChanged(position);
     }
 
 }

@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-    Display search result from search bar
+    Display search result for player from search bar
  */
 public class SecondFragment extends Fragment {
     private RecyclerView recyclerViewPlayerSearchResult;
@@ -58,9 +58,6 @@ public class SecondFragment extends Fragment {
 
         if (playerNames == null) playerNames = new String[0];
         if (playerUrls == null) playerUrls = new String[0];
-//        if (savedInstanceState != null) {
-//            recyclerViewPlayerSearchResult = savedInstanceState.getParcelable("recycler_state_key");
-//        }
 
         if (asyncBroadcastReceiver == null) {
             asyncBroadcastReceiver = new AsyncBroadcastReceiver();
@@ -132,7 +129,6 @@ public class SecondFragment extends Fragment {
                             @Override
                             public void onItemClick(int position) {
                                 Toast.makeText(getContext(), position + ": onItemClick() in onViewCreated (AsyncReceiver)", Toast.LENGTH_SHORT).show();
-//                                initRecyclerViewOnItemClick();
                                 Intent myIntent = new Intent(getContext(), PlayerMatchesActivity.class);
                                 myIntent.putExtra("playerName", playerNames[position]);
                                 startActivity(myIntent);

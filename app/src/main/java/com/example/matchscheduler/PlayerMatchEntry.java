@@ -10,6 +10,7 @@ public class PlayerMatchEntry {
     private String tournamentName;
     private Date date;
     private Time time;
+    private boolean isAdded;
 
     public PlayerMatchEntry(String playerName, String playerRace, String opponent,
                             String tournamentName, Date date, Time time) {
@@ -19,6 +20,7 @@ public class PlayerMatchEntry {
         this.tournamentName = tournamentName;
         this.date = date;
         this.time = time;
+        this.isAdded = false;
     }
 
     public String getPlayerName() {
@@ -33,7 +35,9 @@ public class PlayerMatchEntry {
         return opponentName;
     }
 
-    public String getTournamentName(){return tournamentName;}
+    public String getTournamentName() {
+        return tournamentName;
+    }
 
     public Date getDate() {
         return date;
@@ -41,6 +45,10 @@ public class PlayerMatchEntry {
 
     public Time getTime() {
         return time;
+    }
+
+    public boolean getIsAdded() {
+        return isAdded;
     }
 
     public void setPlayerName(String playerName) {
@@ -61,5 +69,9 @@ public class PlayerMatchEntry {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded;
     }
 }
