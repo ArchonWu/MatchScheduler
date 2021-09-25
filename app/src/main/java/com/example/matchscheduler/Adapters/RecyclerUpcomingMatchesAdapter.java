@@ -45,9 +45,11 @@ public class RecyclerUpcomingMatchesAdapter extends RecyclerView.Adapter<Recycle
         if (!checkIfHasUpcoming.equals("No Upcoming Matches Found")) {
             holder.textViewDate.setText(playerMatchEntries.get(position).getDate().toString());
             holder.textViewTime.setText(playerMatchEntries.get(position).getTime().toString());
+            holder.imageViewIsAdded.setVisibility(View.VISIBLE);
         } else {
             holder.textViewDate.setText("");
             holder.textViewTime.setText("");
+            holder.imageViewIsAdded.setVisibility(View.INVISIBLE);
         }
         if (!playerMatchEntries.get(position).getIsAdded())
             holder.imageViewIsAdded.setImageResource(R.drawable.ic_is_checked_false);

@@ -76,15 +76,10 @@ public class FirstFragment extends Fragment {
             }
         });
 
-
         recyclerView = getView().findViewById(R.id.first_fragment_result_recyclerView);
         tv = (TextView) theView.findViewById(R.id.textView_first_fragment);
 
         // TODO: populate recyclerView from saved data
-//        s1[0] = "s1_0";
-//        s1[1] = "s1_1";
-//        s2[0] = "s2_0";
-//        s2[1] = "s2_1";
 
         RecyclerSavedAdapter recyclerResultAdapter = new RecyclerSavedAdapter(getActivity(), s1, s2, null);
         recyclerView.setAdapter(recyclerResultAdapter);

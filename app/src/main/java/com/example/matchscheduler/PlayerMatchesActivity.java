@@ -54,23 +54,24 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         }
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
-        if (!playerName.equals(""))
-            doOkHttpRequest();
-        else {
-            allInfoString = loadJsonFromAsset();
-//            allInfoString = "";
-            matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
-            playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
+//        if (!playerName.equals(""))
+//            doOkHttpRequest();
+//        else {
+        allInfoString = loadJsonFromAsset();
+        matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
+        playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
-            recyclerUpcomingMatchesAdapter = new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries, new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    initOnClickListener(position);
-                }
-            });
-            recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
-            recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
-        }
+        recyclerUpcomingMatchesAdapter =
+                new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries
+                        , new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        initOnClickListener(position);
+                    }
+                });
+        recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
+        recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
+//        }
     }
 
     private String loadJsonFromAsset() {
@@ -128,6 +129,10 @@ public class PlayerMatchesActivity extends AppCompatActivity {
                                 recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(context));
                                 recyclerUpcomingMatchesAdapter.notifyDataSetChanged();
 
+                                //test
+                                TextView textView = findViewById(R.id.textView_trimmed);
+                                textView.setText(playerMatchEntries.get(0).getDate().toString());
+
                                 // TODO: save response to assets
 
                             }
@@ -142,12 +147,11 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         if (!playerMatchEntries.get(position).getIsAdded()) {
             playerMatchEntries.get(position).setIsAdded(true);
             addedUpcomingMatchEntries.add(playerMatchEntries.get(position));
-            //TODO: SAVE TO JSON
         } else {
             playerMatchEntries.get(position).setIsAdded(false);
             addedUpcomingMatchEntries.remove(playerMatchEntries.get(position));
-            // TODO: REMOVE FROM JSON
         }
+        // TODO: update saved data file
         recyclerUpcomingMatchesAdapter.notifyItemChanged(position);
     }
 

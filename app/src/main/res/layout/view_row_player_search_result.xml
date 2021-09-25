@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/textView_player_url_result"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@android:drawable/btn_star_big_off" />
 
             <TextView
                 android:id="@+id/textView_player_name_result"
