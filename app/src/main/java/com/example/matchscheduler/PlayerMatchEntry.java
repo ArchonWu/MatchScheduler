@@ -1,9 +1,17 @@
 package com.example.matchscheduler;
 
+import android.util.JsonWriter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.channels.WritableByteChannel;
 import java.sql.Time;
 import java.util.Date;
 
-public class PlayerMatchEntry {
+public class PlayerMatchEntry{
     private String playerName;
     private String playerRace;
     private String opponentName;
@@ -73,5 +81,14 @@ public class PlayerMatchEntry {
 
     public void setIsAdded(boolean isAdded) {
         this.isAdded = isAdded;
+    }
+
+    public void writeToJson(JsonWriter writer) throws IOException {
+        writer.beginObject();
+        writer.name("playerName").value(playerName);
+        writer.name("opponentName").value(opponentName);
+        writer.name("tournamentName").value(tournamentName);
+        writer.name("date").value(String.valueOf(date));
+        writer.endObject();
     }
 }

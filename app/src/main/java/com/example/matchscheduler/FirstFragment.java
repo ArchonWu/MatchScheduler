@@ -50,6 +50,7 @@ public class FirstFragment extends Fragment {
         setHasOptionsMenu(true);
         s1 = new String[0];
         s2 = new String[0];
+
         return theView;
     }
 

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.JsonWriter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +19,18 @@ import android.widget.Toast;
 
 import com.example.matchscheduler.Adapters.RecyclerUpcomingMatchesAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -29,6 +41,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
 
 public class PlayerMatchesActivity extends AppCompatActivity {
     private MatchEntryExtractor matchEntryExtractor;
@@ -41,12 +54,16 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     private String allInfoString;
     private Context context;
 
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_player);
 
         context = this;
+
         playerName = "Neeb";
         addedUpcomingMatchEntries = new ArrayList<>();
         if (getIntent().hasExtra("playerName")) {
@@ -54,26 +71,27 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         }
 
         recyclerViewPlayerUpcomingMatchesResult = findViewById(R.id.recycler_view_player_upcoming_matches);
-//        if (!playerName.equals(""))
-//            doOkHttpRequest();
-//        else {
-        allInfoString = loadJsonFromAsset();
-        matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
-        playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
+        if (!playerName.equals(""))
+            doOkHttpRequest();
+        else {
+            allInfoString = loadJsonFromAsset();
+            matchEntryExtractor = new MatchEntryExtractor(playerName, allInfoString);
+            playerMatchEntries = matchEntryExtractor.getPlayerMatchEntryList();
 
-        recyclerUpcomingMatchesAdapter =
-                new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries
-                        , new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        initOnClickListener(position);
-                    }
-                });
-        recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
-        recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
-//        }
+            recyclerUpcomingMatchesAdapter =
+                    new RecyclerUpcomingMatchesAdapter(this, playerMatchEntries
+                            , new RecyclerUpcomingMatchesAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            initOnClickListener(position);
+                        }
+                    });
+            recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
+            recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
+    // for testing
     private String loadJsonFromAsset() {
         String jsonString = null;
         try {
@@ -133,7 +151,6 @@ public class PlayerMatchesActivity extends AppCompatActivity {
                                 TextView textView = findViewById(R.id.textView_trimmed);
                                 textView.setText(playerMatchEntries.get(0).getDate().toString());
 
-                                // TODO: save response to assets
 
                             }
                         });
@@ -143,7 +160,6 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     }
 
     private void initOnClickListener(int position) {
-        Toast.makeText(context, "onItemClick() in UpcomingMatchesActivity", Toast.LENGTH_SHORT).show();
         if (!playerMatchEntries.get(position).getIsAdded()) {
             playerMatchEntries.get(position).setIsAdded(true);
             addedUpcomingMatchEntries.add(playerMatchEntries.get(position));
@@ -151,8 +167,26 @@ public class PlayerMatchesActivity extends AppCompatActivity {
             playerMatchEntries.get(position).setIsAdded(false);
             addedUpcomingMatchEntries.remove(playerMatchEntries.get(position));
         }
-        // TODO: update saved data file
+        saveToFile();
         recyclerUpcomingMatchesAdapter.notifyItemChanged(position);
+    }
+
+    private void saveToFile() {
+        try {
+            JsonWriter writer = new JsonWriter(new FileWriter(getCacheDir() + "/scheduledMatchesSave.json"));
+            writer.beginArray();
+            writer.setIndent("  ");
+            for (PlayerMatchEntry playerMatchEntry : addedUpcomingMatchEntries)
+                playerMatchEntry.writeToJson(writer);
+            writer.endArray();
+            writer.close();
+
+            Toast.makeText(context, "Match added!", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Something went wrong D:", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }
