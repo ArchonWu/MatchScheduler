@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -50,12 +51,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     private ArrayList<PlayerMatchEntry> playerMatchEntries;
     private ArrayList<PlayerMatchEntry> addedUpcomingMatchEntries;
     private String playerName;
-    private String playerNameHttp;
     private String allInfoString;
     private Context context;
-
-    private JsonReader jsonReader;
-    private JsonWriter jsonWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +60,12 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_player);
 
         context = this;
+//        JsonReader jsonReader = new JsonReader(new InputStreamReader());
 
-        playerName = "Neeb";
+        playerName = "";
+        //TODO: update addedUpcomingMatchEntries from saved json file
         addedUpcomingMatchEntries = new ArrayList<>();
+
         if (getIntent().hasExtra("playerName")) {
             playerName = getIntent().getExtras().getString("playerName");
         }
@@ -88,6 +88,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
                     });
             recyclerViewPlayerUpcomingMatchesResult.setAdapter(recyclerUpcomingMatchesAdapter);
             recyclerViewPlayerUpcomingMatchesResult.setLayoutManager(new LinearLayoutManager(this));
+            TextView textView = findViewById(R.id.textView_trimmed);
+            textView.setText(playerMatchEntries.get(0).getDate().toString());
         }
     }
 
@@ -109,7 +111,7 @@ public class PlayerMatchesActivity extends AppCompatActivity {
     }
 
     private void doOkHttpRequest() {
-        playerNameHttp = playerName.replace(' ', '_');
+        String playerNameHttp = playerName.replace(' ', '_');
         String urlRequest = "https://liquipedia.net/starcraft2/api.php?action=parse&format=json&page=" + playerNameHttp + "&prop=text";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

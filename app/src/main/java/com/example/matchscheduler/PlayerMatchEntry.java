@@ -2,26 +2,20 @@ package com.example.matchscheduler;
 
 import android.util.JsonWriter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.Writer;
-import java.nio.channels.WritableByteChannel;
 import java.sql.Time;
-import java.util.Date;
 
 public class PlayerMatchEntry{
     private String playerName;
     private String playerRace;
     private String opponentName;
     private String tournamentName;
-    private Date date;
+    private String date;
     private Time time;
     private boolean isAdded;
 
     public PlayerMatchEntry(String playerName, String playerRace, String opponent,
-                            String tournamentName, Date date, Time time) {
+                            String tournamentName, String date, Time time) {
         this.playerName = playerName;
         this.playerRace = playerRace;
         this.opponentName = opponent;
@@ -47,7 +41,7 @@ public class PlayerMatchEntry{
         return tournamentName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -71,7 +65,7 @@ public class PlayerMatchEntry{
         this.opponentName = opponentName;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -44,7 +44,6 @@ public class SecondFragment extends Fragment {
     private String[] playerNames;
     private String[] playerUrls;
     private AsyncBroadcastReceiver asyncBroadcastReceiver;
-    //    private static Bundle recyclerStateBundle;
     private Parcelable recyclerState;
 
     @Override
