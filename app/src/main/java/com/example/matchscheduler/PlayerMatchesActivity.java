@@ -60,9 +60,8 @@ public class PlayerMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_player);
 
         context = this;
-//        JsonReader jsonReader = new JsonReader(new InputStreamReader());
-
         playerName = "";
+
         //TODO: update addedUpcomingMatchEntries from saved json file
         addedUpcomingMatchEntries = new ArrayList<>();
 

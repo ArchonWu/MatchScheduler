@@ -72,7 +72,6 @@ public class MatchEntryExtractor {
     }
 
     protected String filterMatchDateTime(String jsonString) throws IOException {
-        // TODO: default time are in UTC, need to convert
         String inHere = jsonString.substring(jsonString.indexOf("<span class=\\\"match-countdown\\\">"));
         String somewhere = inHere.substring(0, inHere.indexOf("</span>"));
         String morePrecise = somewhere.substring(somewhere.indexOf("<span class=\\\"timer-object timer-object-countdown-only\\\""), somewhere.indexOf(" <abbr"));

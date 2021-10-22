@@ -2,12 +2,13 @@ package com.example.matchscheduler;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.JsonWriter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,11 @@ import com.example.matchscheduler.Adapters.RecyclerSavedAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,7 +34,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /*
-    Display user previously saved matches
+    Display search results
  */
 public class FirstFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -65,9 +70,7 @@ public class FirstFragment extends Fragment {
                 searchView.onActionViewCollapsed();
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
-
                 doOkHttpRequest(query);
-
                 return true;
             }
 
@@ -79,8 +82,6 @@ public class FirstFragment extends Fragment {
 
         recyclerView = getView().findViewById(R.id.first_fragment_result_recyclerView);
         tv = (TextView) theView.findViewById(R.id.textView_first_fragment);
-
-        // TODO: populate recyclerView from saved data
 
         RecyclerSavedAdapter recyclerResultAdapter = new RecyclerSavedAdapter(getActivity(), s1, s2, null);
         recyclerView.setAdapter(recyclerResultAdapter);
