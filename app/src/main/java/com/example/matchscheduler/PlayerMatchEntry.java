@@ -3,6 +3,7 @@ package com.example.matchscheduler;
 import android.util.JsonWriter;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Time;
 
 public class PlayerMatchEntry{
@@ -10,12 +11,13 @@ public class PlayerMatchEntry{
     private String playerRace;
     private String opponentName;
     private String tournamentName;
+    private Date dateAndTime;
     private String date;
-    private Time time;
+    private String time;
     private boolean isAdded;
 
     public PlayerMatchEntry(String playerName, String playerRace, String opponent,
-                            String tournamentName, String date, Time time) {
+                            String tournamentName, String date, String time) {
         this.playerName = playerName;
         this.playerRace = playerRace;
         this.opponentName = opponent;
@@ -45,7 +47,7 @@ public class PlayerMatchEntry{
         return date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -69,7 +71,7 @@ public class PlayerMatchEntry{
         this.date = date;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -1,18 +1,13 @@
 package com.example.matchscheduler;
 
-import android.annotation.SuppressLint;
-
 import java.io.IOException;
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.TimeZone;
 
+/*
+    Display info of results shown in a player's upcoming match by row
+ */
 public class MatchEntryExtractor {
     private ArrayList<PlayerMatchEntry> playerMatchEntries;
     private String playerName;
@@ -23,6 +18,7 @@ public class MatchEntryExtractor {
     private String[] opponentNames;
     private String[] tournamentNames;
     private String[] dates;
+    private String[] times;
     private boolean init;
 
     public MatchEntryExtractor(String playerName, String allInfoText) {
@@ -36,8 +32,10 @@ public class MatchEntryExtractor {
         try {
             this.trimmedInfoText = getTrimmedUpcomingText();
         } catch (ProcessingDataException e) {
+//            playerMatchEntries.add(new PlayerMatchEntry("", "", "",
+//                    "No Upcoming Matches Found", "", new Time(0)));
             playerMatchEntries.add(new PlayerMatchEntry("", "", "",
-                    "No Upcoming Matches Found", "", new Time(0)));
+                    "No Upcoming Matches Found", "", ""));
             this.init = true;
             e.printStackTrace();
         }
@@ -45,7 +43,8 @@ public class MatchEntryExtractor {
         this.dividedUpcomingMatches = getDividedUpcomingMatches();
         this.opponentNames = getOpponentNames();
         this.tournamentNames = getTournamentNames();
-        this.dates = getDateTime();
+        this.dates = getDatesOfEntry();
+        this.times = getTimesOfEntry();
         this.init = true;
     }
 
@@ -66,7 +65,7 @@ public class MatchEntryExtractor {
         for (int i = 0; i < totalUpcomingMatches; i++) {
             PlayerMatchEntry playerMatchEntry =
                     new PlayerMatchEntry(getLeftPlayer(), "...", opponentNames[i], tournamentNames[i],
-                            dates[i].toString(), new Time(0));
+                            dates[i].toString(), times[i]);
             playerMatchEntries.add(playerMatchEntry);
         }
     }
@@ -130,25 +129,31 @@ public class MatchEntryExtractor {
         return tournamentNames;
     }
 
-    protected String[] getDateTime() {
+    protected String[] getDatesOfEntry() {
         if (init) return dates;
         dates = new String[totalUpcomingMatches];
-//        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy - HH:mm");
         for (int i = 0; i < totalUpcomingMatches; i++) {
             String dateTime = "error";
             dateTime = dividedUpcomingMatches[i];
             dateTime = dateTime.substring(0, dateTime.indexOf("<abbr data-tz="));
             dateTime = dateTime.substring(dateTime.lastIndexOf("\">") + 2);
-//            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-//            try {
-//                calendar.setTime(Objects.requireNonNull(sdf.parse(dateTime)));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            calendar.setTimeZone(TimeZone.getTimeZone("PDT"));
-//            dates[i] = calendar.getTime().toString();
-            dates[i] = dateTime;
+            String dateYear = dateTime.substring(0, dateTime.indexOf(" - "));
+            dates[i] = dateYear;
         }
         return dates;
+    }
+
+    protected String[] getTimesOfEntry() {
+        if (init) return times;
+        times = new String[totalUpcomingMatches];
+        for (int i = 0; i < totalUpcomingMatches; i++) {
+            String dateTime = "error";
+            dateTime = dividedUpcomingMatches[i];
+            dateTime = dateTime.substring(0, dateTime.indexOf("<abbr data-tz="));
+            dateTime = dateTime.substring(dateTime.lastIndexOf("\">") + 2);
+            String timeString = dateTime.substring(dateTime.indexOf(" - ") + 3);
+            times[i] = timeString;
+        }
+        return times;
     }
 }
