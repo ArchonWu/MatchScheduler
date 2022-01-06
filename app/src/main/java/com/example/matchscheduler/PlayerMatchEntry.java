@@ -6,22 +6,23 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 
-public class PlayerMatchEntry{
+public class PlayerMatchEntry {
     private String playerName;
     private String playerRace;
     private String opponentName;
     private String tournamentName;
-    private Date dateAndTime;
+    private Date matchDate;
     private String date;
     private String time;
     private boolean isAdded;
 
     public PlayerMatchEntry(String playerName, String playerRace, String opponent,
-                            String tournamentName, String date, String time) {
+                            String tournamentName, Date matchDate, String date, String time) {
         this.playerName = playerName;
         this.playerRace = playerRace;
         this.opponentName = opponent;
         this.tournamentName = tournamentName;
+        this.matchDate = matchDate;
         this.date = date;
         this.time = time;
         this.isAdded = false;
@@ -41,6 +42,10 @@ public class PlayerMatchEntry{
 
     public String getTournamentName() {
         return tournamentName;
+    }
+
+    public Date getMatchDate() {
+        return matchDate;
     }
 
     public String getDate() {

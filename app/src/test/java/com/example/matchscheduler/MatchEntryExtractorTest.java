@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 public class MatchEntryExtractorTest {
     MatchEntryExtractor matchEntryExtractor1, matchEntryExtractor2;
@@ -105,5 +106,31 @@ public class MatchEntryExtractorTest {
         String expected2 = "2021 GSL S3: Code S";
         assertEquals(expected1, testName1);
         assertEquals(expected2, testName2);
+    }
+
+    @Test
+    public void testStringToDate() {
+        // Test one match entry
+        Date date1 = matchEntryExtractor1.getMatchDates().get(0);   // September 7, 2021 - 14:00
+        String testDate1 = date1.toString();
+        String expected1 = "Tue Sep 07 14:00:00 PDT 2021";
+        assertEquals(expected1, testDate1);
+
+        // Test two match entries
+        Date date2 = matchEntryExtractor2.getMatchDates().get(0);   // September 8, 2021 - 12:00
+        Date date3 = matchEntryExtractor2.getMatchDates().get(1);   // September 13, 2021 - 9:30
+        String testDate2 = date2.toString();
+        String testDate3 = date3.toString();
+        String expected2 = "Wed Sep 08 12:00:00 PDT 2021";
+        String expected3 = "Mon Sep 13 09:30:00 PDT 2021";
+        assertEquals(expected2, testDate2);
+        assertEquals(expected3, testDate3);
+    }
+
+    @Test
+    public void testGetTimesOfEntryUsingDate(){
+        String testTime1 = matchEntryExtractor1.getTimesOfEntry().get(0);
+        String expected1 = "14:00";
+        assertEquals(expected1, testTime1);
     }
 }
