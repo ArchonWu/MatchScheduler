@@ -2,8 +2,6 @@ package com.example.matchscheduler;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.JsonWriter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,7 @@ import com.example.matchscheduler.Adapters.RecyclerSavedAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,13 +30,12 @@ import okhttp3.Response;
 /*
     Display search results
  */
-public class FirstFragment extends Fragment {
+public class SearchPlayerBarHomeFragment extends Fragment {
     private RecyclerView recyclerView;
     public SearchView searchView;
     private View theView;
     private TextView tv;
     private JSONArray dataJsonArray;
-
     private String[] s1, s2;
 
     @Override
@@ -68,7 +61,7 @@ public class FirstFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.onActionViewCollapsed();
-                NavHostFragment.findNavController(FirstFragment.this)
+                NavHostFragment.findNavController(SearchPlayerBarHomeFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
                 doOkHttpRequest(query);
                 return true;

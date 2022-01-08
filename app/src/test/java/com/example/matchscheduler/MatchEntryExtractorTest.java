@@ -128,9 +128,13 @@ public class MatchEntryExtractorTest {
     }
 
     @Test
-    public void testGetTimesOfEntryUsingDate(){
+    public void testGetDatesAndTimesOfEntryUsingDate(){
+        String testDate1 = matchEntryExtractor1.getDatesOfEntry().get(0);
+        String expectedDate1 = "Sep. 07, 2021";
+        assertEquals(expectedDate1, testDate1);
+
         String testTime1 = matchEntryExtractor1.getTimesOfEntry().get(0);
-        String expected1 = "14:00";
-        assertEquals(expected1, testTime1);
+        String expectedTime1 = "14:00";
+        assertEquals(expectedTime1, testTime1);
     }
 }

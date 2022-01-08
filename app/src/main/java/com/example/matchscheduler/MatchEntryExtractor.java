@@ -21,8 +21,8 @@ public class MatchEntryExtractor {
     private String[] dividedUpcomingMatches;
     private String[] opponentNames;
     private String[] tournamentNames;
-    private ArrayList<java.util.Date> matchDates;
-    private String[] dates;
+    private ArrayList<Date> matchDates;
+    private ArrayList<String> dates;
     private ArrayList<String> times;
     private boolean init;
 
@@ -70,7 +70,7 @@ public class MatchEntryExtractor {
             //TODO: add Date field and optimize dates and times processing
             PlayerMatchEntry playerMatchEntry =
                     new PlayerMatchEntry(getLeftPlayer(), "...", opponentNames[i], tournamentNames[i],
-                            null, dates[i], times.get(i));
+                            null, dates.get(i), times.get(i));
             playerMatchEntries.add(playerMatchEntry);
         }
     }
@@ -160,18 +160,16 @@ public class MatchEntryExtractor {
         return theDate;
     }
 
-    // TODO: update this with Date
-    protected String[] getDatesOfEntry() {
-        if (init) return dates;
-        dates = new String[totalUpcomingMatches];
-        for (int i = 0; i < totalUpcomingMatches; i++) {
-            String dateTime = dividedUpcomingMatches[i];
-            dateTime = dateTime.substring(0, dateTime.indexOf("<abbr data-tz="));
-            dateTime = dateTime.substring(dateTime.lastIndexOf("\">") + 2);
-            String dateYear = dateTime.substring(0, dateTime.indexOf(" - "));
-            dates[i] = dateYear;
+    protected ArrayList<String> getDatesOfEntry(){
+        ArrayList<String> times = new ArrayList<>();
+        for (int i = 0; i < matchDates.size(); i++){
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy");
+            Date matchDate = matchDates.get(i);
+            String matchDateString = outputFormat.format(matchDate);
+            System.out.println("matchDate in getDatesOfEntry(): " + matchDateString);
+            times.add(matchDateString);
         }
-        return dates;
+        return times;
     }
 
     protected ArrayList<String> getTimesOfEntry(){
